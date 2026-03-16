@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Velora — Sell your knowledge</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#5B4FE8;--brand-dk:#4840CC;--brand-lt:#F0EFFE;--brand-mid:#7C6FF5;
+  --ink:#0D0D14;--ink2:#3A3A4A;--muted:#767688;
+  --border:#E5E3F0;--surf:#FAFAF8;--surf2:#F2F0FA;--white:#FFFFFF;
+  --green:#0A7A4A;--green-lt:#E8F5EE;--red:#C0392B;
+  --fr:'Fraunces',serif;--js:'Plus Jakarta Sans',sans-serif;
+}
+html,body{height:100%;font-family:var(--js);font-size:14px;color:var(--ink);background:var(--white);overflow:hidden}
+
+/* ── SCREEN SYSTEM ── */
+.screen{position:absolute;inset:0;display:none;overflow-y:auto;overflow-x:hidden}
+.screen.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp .3s ease both}
+.fu2{animation:fadeUp .3s .07s ease both}
+.fu3{animation:fadeUp .3s .14s ease both}
+.fu4{animation:fadeUp .3s .21s ease both}
+
+/* ── SHARED NAV ── */
+.topnav{display:flex;align-items:center;gap:8px;padding:0 24px;height:54px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.94);backdrop-filter:blur(8px);position:sticky;top:0;z-index:200;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none;flex-shrink:0}
+.lmark{width:28px;height:28px;background:var(--brand);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--fr);font-weight:700;font-size:14px}
+.lname{font-family:var(--fr);font-weight:700;font-size:16px;color:var(--ink)}
+.lname span{color:var(--brand)}
+.nav-sep{flex:1}
+.nav-link{padding:5px 11px;border-radius:6px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--muted);transition:.15s;text-decoration:none}
+.nav-link:hover{color:var(--ink);background:var(--surf2)}
+.nav-link.on{color:var(--brand)}
+.lt{display:flex;align-items:center;background:var(--surf2);border-radius:20px;padding:2px;border:1px solid var(--border)}
+.lb{padding:3px 10px;border-radius:16px;font-size:11px;font-weight:600;cursor:pointer;color:var(--muted);transition:.15s;user-select:none}
+.lb.on{background:var(--ink);color:#fff}
+.av-sm{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;cursor:pointer;flex-shrink:0}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;cursor:pointer;font-family:var(--js);font-weight:500;border-radius:8px;transition:all .18s;text-decoration:none;white-space:nowrap}
+.bp{background:var(--brand);color:#fff;padding:9px 18px;font-size:13px}.bp:hover{background:var(--brand-dk);transform:translateY(-1px)}
+.bg2{background:transparent;color:var(--ink);border:1.5px solid var(--border);padding:8px 16px;font-size:12.5px}.bg2:hover{background:var(--surf2)}
+.bsm{padding:4px 10px;font-size:11.5px}
+.bfull{width:100%;padding:12px;font-size:13.5px;border-radius:9px}
+.bgreen{background:var(--green);color:#fff}.bgreen:hover{background:#085041}
+
+/* ── FORMS ── */
+.fi{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--js);font-size:13px;color:var(--ink);background:var(--white);outline:none;transition:.15s;margin-bottom:10px}
+.fi:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(91,79,232,.07)}
+.fi::placeholder{color:#B0B0C0}
+.fl{display:block;font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:4px;letter-spacing:.1px}
+.fhint{font-size:10.5px;color:var(--muted);margin-top:-7px;margin-bottom:8px}
+.fg{margin-bottom:12px}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fdiv{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muted);font-size:12px}
+.fdiv::before,.fdiv::after{content:'';flex:1;height:1px;background:var(--border)}
+.bgoog{background:var(--white);color:var(--ink);border:1.5px solid var(--border);padding:10px 16px;font-size:13px;font-weight:500;width:100%;border-radius:8px}.bgoog:hover{background:var(--surf2)}
+.pw-bars{display:flex;gap:3px;margin-top:4px;margin-bottom:6px}
+.pw-bar{flex:1;height:3px;background:var(--border);border-radius:2px;transition:.3s}
+.pw-bar.w{background:#E24B4A}.pw-bar.f{background:#F0A500}.pw-bar.s{background:var(--green)}
+
+/* ── BADGES / CHIPS ── */
+.badge{display:inline-flex;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
+.badgeg{background:var(--green-lt);color:var(--green)}
+.badgep{background:var(--brand-lt);color:var(--brand)}
+.badgex{background:var(--surf2);color:var(--muted)}
+.badgeo{background:#FFF0EB;color:#E8440A}
+.badgey{background:#FDF8E8;color:#B8860B}
+.chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);color:var(--ink2);transition:.15s;user-select:none}
+.chip:hover,.chip.on{border-color:var(--brand);color:var(--brand);background:var(--brand-lt)}
+
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:15px}
+.ct{font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:12px}
+
+/* ── STEPPER ── */
+.stepper{display:flex;align-items:center;margin-bottom:22px}
+.spc{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:var(--muted);transition:.2s;flex-shrink:0;background:var(--white)}
+.spc.on{border-color:var(--brand);background:var(--brand);color:#fff}
+.spc.dn{border-color:var(--green);background:var(--green);color:#fff}
+.sln{flex:1;height:2px;background:var(--border);margin:0 5px;transition:.2s}
+.sln.dn{background:var(--green)}
+
+/* ── TABLES ── */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:5px 9px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.3px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:8px 9px;border-bottom:1px solid var(--border);color:var(--ink2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surf)}
+.tblw{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+
+/* ── TOGGLE ── */
+.tgl{width:32px;height:18px;background:var(--border);border-radius:9px;cursor:pointer;position:relative;transition:.2s;flex-shrink:0}
+.tgl.on{background:var(--brand)}
+.tgl::after{content:'';position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s}
+.tgl.on::after{left:17px}
+.trow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.trow:last-child{border-bottom:none}
+.ti{font-size:12.5px;font-weight:500;color:var(--ink)}
+.ts2{font-size:11px;color:var(--muted);margin-top:1px}
+
+/* ── PROGRESS BARS ── */
+.pbars{display:flex;align-items:flex-end;gap:3px;height:48px;margin-bottom:4px}
+.pbar-b{flex:1;border-radius:2px 2px 0 0}
+.prow{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.pbw{flex:1;height:5px;background:var(--surf2);border-radius:3px}
+.pbi{height:100%;border-radius:3px}
+
+/* ── SHARE LINK ── */
+.share-bar{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--brand) 0%,var(--brand-mid) 100%);border-radius:10px;padding:11px 15px;margin-bottom:14px}
+.sb-label{font-size:9px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.5px;text-transform:uppercase;margin-bottom:1px}
+.sb-url{font-size:13px;font-weight:700;color:#fff;font-family:var(--fr);letter-spacing:-.2px}
+.sb-btn{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--js);transition:.15s;white-space:nowrap}
+.sb-btn:hover{background:rgba(255,255,255,.3)}
+.sb-btn.wh{background:#fff;color:var(--brand)}.sb-btn.wh:hover{background:var(--brand-lt)}
+
+/* ── PRODUCT CARDS ── */
+.pc{border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:.15s}
+.pc:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.pth{height:78px;display:flex;align-items:center;justify-content:center;font-size:30px}
+.pb2{padding:10px}
+.pn{font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.pty{font-size:10.5px;color:var(--muted);margin-bottom:6px}
+.pp{font-family:var(--fr);font-size:15px;font-weight:700;color:var(--ink)}
+
+/* ── PAYMENT METHODS ── */
+.pm{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:7px;cursor:pointer;transition:.15s}
+.pm:hover,.pm.on{border-color:var(--brand);background:var(--brand-lt)}
+
+/* ── HERO ── */
+.hero-bg{background:radial-gradient(ellipse 70% 50% at 50% -5%,rgba(91,79,232,.11) 0%,transparent 65%)}
+.hero-dots{background-image:radial-gradient(circle,rgba(91,79,232,.07) 1px,transparent 1px);background-size:28px 28px}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--brand-lt);border:1px solid rgba(91,79,232,.2);border-radius:20px;padding:4px 13px;font-size:11.5px;font-weight:600;color:var(--brand)}
+
+/* ── STAT BOXES ── */
+.sg2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:13px}
+.sc{background:var(--surf);border-radius:9px;padding:12px 14px}
+.sl{font-size:9.5px;font-weight:600;color:var(--muted);letter-spacing:.4px;margin-bottom:4px}
+.sv{font-family:var(--fr);font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.5px}
+.sd{font-size:10.5px;margin-top:2px}.up{color:var(--green)}.dn{color:var(--red)}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+
+/* ── AUTH LAYOUTS ── */
+.auth-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 0px)}
+.auth-l{background:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:36px;position:relative;overflow:hidden}
+.auth-l-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 80%,rgba(91,79,232,.38) 0%,transparent 60%);pointer-events:none}
+.auth-l-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:22px 22px;pointer-events:none}
+.auth-l h2{font-family:var(--fr);font-size:clamp(22px,3vw,34px);font-weight:700;color:#fff;letter-spacing:-.4px;line-height:1.2;margin-bottom:12px}
+.auth-l h2 em{font-style:italic;color:var(--brand-mid)}
+.auth-l p{font-size:13.5px;color:rgba(255,255,255,.5);line-height:1.65;max-width:320px}
+.auth-feat{display:flex;align-items:center;gap:9px;font-size:12.5px;color:rgba(255,255,255,.72);margin-bottom:10px}
+.afi{width:28px;height:28px;border-radius:7px;background:rgba(91,79,232,.28);border:1px solid rgba(91,79,232,.4);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.auth-r{display:flex;align-items:center;justify-content:center;padding:36px 28px;background:var(--white)}
+.auth-form{width:100%;max-width:390px}
+.auth-form h1{font-family:var(--fr);font-size:24px;font-weight:700;color:var(--ink);letter-spacing:-.3px;margin-bottom:4px}
+.auth-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.5}
+.switch-p{text-align:center;font-size:12.5px;color:var(--muted);margin-top:14px}
+.switch-p a{color:var(--brand);font-weight:600;cursor:pointer}
+.terms-p{font-size:11px;color:var(--muted);text-align:center;line-height:1.6;margin-top:10px}
+.terms-p a{color:var(--brand)}
+
+/* ── STEP PANELS ── */
+.spanel{display:none}.spanel.on{display:block}
+
+/* ── CATEGORY CARDS ── */
+.cc{background:var(--surf);border-radius:9px;padding:12px;text-align:center;cursor:pointer;border:1px solid transparent;transition:.15s}
+.cc:hover{border-color:var(--border);background:var(--white)}
+.cc.on{border-color:var(--brand);background:var(--brand-lt)}
+
+/* ── CHOICE CARDS ── */
+.chc{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:28px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.chc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(91,79,232,.04) 0%,transparent 60%);opacity:0;transition:.2s}
+.chc:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 6px 24px rgba(91,79,232,.1)}
+.chc:hover::before{opacity:1}
+.chc ul{list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:18px}
+.chc ul li{font-size:12.5px;color:var(--ink2);display:flex;align-items:center;gap:6px}
+.chc ul li::before{content:'✓';color:var(--brand);font-weight:700;font-size:11px}
+
+/* ── NOTIFICATIONS ── */
+.notif{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid var(--border)}
+.notif:last-child{border-bottom:none}
+.ni2{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.ndot{width:6px;height:6px;border-radius:50%;background:var(--brand);margin-top:5px;flex-shrink:0}
+
+/* ── PAYOUT ROW ── */
+.pyrow{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:7px}
+.pylogo{width:34px;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff}
+
+/* ── SUCCESS ── */
+.succ-card{max-width:460px;width:100%;text-align:center;margin:0 auto}
+.succ-icon{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 20px}
+.succ-step{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;background:var(--surf);border-radius:8px;border:1px solid var(--border);margin-bottom:8px;text-align:left}
+.ss-n{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;margin-top:1px}
+
+/* ── DASHBOARD SHELL ── */
+.dash-app{display:grid;grid-template-columns:196px 1fr;grid-template-rows:54px 1fr;height:100vh}
+.dash-top{grid-column:1/-1;display:flex;align-items:center;gap:7px;padding:0 18px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.94);backdrop-filter:blur(6px);z-index:100}
+.dash-side{border-right:1px solid var(--border);background:var(--surf);overflow-y:auto;padding:7px 6px;display:flex;flex-direction:column}
+.dash-main{overflow-y:auto;padding:20px 24px;background:var(--white)}
+.pg2{display:none}.pg2.on{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.pg2.on{animation:pgIn .2s ease}
+.dsg{font-size:9px;font-weight:600;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;padding:9px 9px 3px}
+.dsi{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:7px;cursor:pointer;font-size:12.5px;color:#555;font-weight:500;margin:1px 0;transition:.12s;user-select:none}
+.dsi:hover{background:#EEEAE3;color:var(--ink)}
+.dsi.on{background:var(--white);color:var(--brand);border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.nbadge{margin-left:auto;background:var(--brand);color:#fff;font-size:9px;padding:1px 5px;border-radius:10px;font-weight:700}
+.dash-ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.dash-pt{font-family:var(--fr);font-size:19px;font-weight:700;color:var(--ink);letter-spacing:-.4px}
+.dash-ps{font-size:11.5px;color:var(--muted);margin-top:2px}
+.cm-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;text-align:center}
+.cmv{font-family:var(--fr);font-size:13px;font-weight:700;color:var(--ink)}
+.cml{font-size:9.5px;color:var(--muted)}
+.sb-pill{display:flex;align-items:center;gap:6px;background:var(--brand-lt);border:1px solid rgba(91,79,232,.2);border-radius:7px;padding:6px 10px;cursor:pointer;margin:5px 6px 0;transition:.15s}
+.sb-pill:hover{background:#E4E0FC}
+.sb-pill-url{font-size:11px;font-weight:700;color:var(--brand);flex:1;font-family:var(--fr)}
+.sb-pill-copy{font-size:10px;color:var(--brand);opacity:.6}
+
+/* EXPLORE CARDS */
+.ec2{border:1px solid var(--border);border-radius:9px;overflow:hidden;cursor:pointer;transition:.15s}
+.ec2:hover{transform:translateY(-2px);box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.eth{height:70px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.en2{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px}
+
+/* CHECKOUT */
+.co-wrap{display:grid;grid-template-columns:1fr 290px;gap:16px}
+.order-sum{background:var(--surf);border-radius:10px;padding:14px}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--ink);color:#fff;padding:9px 18px;border-radius:30px;font-size:13px;font-weight:500;opacity:0;transition:all .3s;z-index:9999;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════
+  S1 — LANDING
+═══════════════════════════════════════════ -->
+<div class="screen on" id="s-landing">
+  <nav class="topnav">
+    <a class="logo" onclick="go('s-landing')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a>
+    <div class="nav-sep"></div>
+    <a class="nav-link" onclick="go('s-explore-pub')"><span data-nl="Ontdekken" data-en="Explore"></span></a>
+    <a class="nav-link" href="#pricing"><span data-nl="Prijzen" data-en="Pricing"></span></a>
+    <a class="nav-link" href="#"><span data-nl="Over" data-en="About"></span></a>
+    <div style="width:1px;height:18px;background:var(--border);margin:0 4px"></div>
+    <div class="lt"><div class="lb on" id="lbn" onclick="setLang('nl')">🇳🇱 NL</div><div class="lb" id="lbe" onclick="setLang('en')">🇬🇧 EN</div></div>
+    <button class="btn bg2" onclick="go('s-login')"><span data-nl="Inloggen" data-en="Log in"></span></button>
+    <button class="btn bp" onclick="go('s-choice')"><span data-nl="Gratis starten" data-en="Start for free"></span></button>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero-bg hero-dots" style="min-height:calc(100vh - 54px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 72px;text-align:center;position:relative">
+    <div class="eyebrow fu" style="margin-bottom:18px">🇳🇱 <span data-nl="Gebouwd voor Nederlandse creators" data-en="Built for Dutch creators"></span></div>
+    <h1 class="fu2" style="font-family:var(--fr);font-size:clamp(34px,6vw,62px);font-weight:700;color:var(--ink);line-height:1.08;letter-spacing:-1.5px;max-width:700px;margin-bottom:18px">
+      <span data-nl="Verkoop je kennis aan de <em style='font-style:italic;color:var(--brand)'>hele wereld</em>" data-en="Sell your knowledge to the <em style='font-style:italic;color:var(--brand)'>whole world</em>"></span>
+    </h1>
+    <p class="fu3" style="font-size:clamp(14px,2vw,17px);color:var(--muted);max-width:500px;line-height:1.65;margin-bottom:32px">
+      <span data-nl="Velora is het platform voor creators om ebooks, cursussen en lidmaatschappen te verkopen — met iDEAL, automatische BTW en een eigen storefront." data-en="Velora is the platform for creators to sell ebooks, courses and memberships — with iDEAL, automatic VAT and your own storefront."></span>
+    </p>
+    <div class="fu4" style="display:flex;align-items:center;gap:11px;flex-wrap:wrap;justify-content:center;margin-bottom:40px">
+      <button class="btn bp" style="padding:13px 28px;font-size:15px;border-radius:10px" onclick="go('s-choice')"><span data-nl="Begin gratis →" data-en="Start for free →"></span></button>
+      <button class="btn bg2" style="padding:12px 24px;font-size:14px;border-radius:10px" onclick="go('s-explore-pub')"><span data-nl="Ontdek producten" data-en="Explore products"></span></button>
+    </div>
+    <div class="fu4" style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted)">
+      <div style="display:flex">
+        <div class="av-sm" style="width:26px;height:26px;font-size:9px;border:2px solid #fff">AK</div>
+        <div class="av-sm" style="width:26px;height:26px;font-size:9px;border:2px solid #fff;background:var(--green);margin-left:-7px">LS</div>
+        <div class="av-sm" style="width:26px;height:26px;font-size:9px;border:2px solid #fff;background:#E8440A;margin-left:-7px">JO</div>
+        <div class="av-sm" style="width:26px;height:26px;font-size:9px;border:2px solid #fff;background:#B8860B;margin-left:-7px">MB</div>
+      </div>
+      <span><b>2.200+</b> <span data-nl="creators gingen je voor" data-en="creators already joined"></span></span>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border)">
+    <div style="background:var(--white);padding:22px;text-align:center"><div style="font-family:var(--fr);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-1px">2.2K+</div><div style="font-size:12px;color:var(--muted);margin-top:3px"><span data-nl="Actieve creators" data-en="Active creators"></span></div></div>
+    <div style="background:var(--white);padding:22px;text-align:center"><div style="font-family:var(--fr);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-1px">€4.8M</div><div style="font-size:12px;color:var(--muted);margin-top:3px"><span data-nl="Verdiend" data-en="Earned"></span></div></div>
+    <div style="background:var(--white);padding:22px;text-align:center"><div style="font-family:var(--fr);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-1px">0%</div><div style="font-size:12px;color:var(--muted);margin-top:3px"><span data-nl="Transactiekosten" data-en="Transaction fees"></span></div></div>
+    <div style="background:var(--white);padding:22px;text-align:center"><div style="font-family:var(--fr);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-1px">15+</div><div style="font-size:12px;color:var(--muted);margin-top:3px"><span data-nl="Landen bereikbaar" data-en="Countries reachable"></span></div></div>
+  </div>
+
+  <!-- FOR WHO SECTION -->
+  <div style="padding:72px 24px;background:var(--surf)" id="pricing">
+    <h2 style="font-family:var(--fr);font-size:30px;font-weight:700;text-align:center;color:var(--ink);letter-spacing:-.4px;margin-bottom:6px"><span data-nl="Voor wie ben jij?" data-en="Who are you?"></span></h2>
+    <p style="text-align:center;color:var(--muted);font-size:14px;margin-bottom:36px"><span data-nl="Kies je pad — je kan altijd wisselen" data-en="Choose your path — you can always switch"></span></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:740px;margin:0 auto">
+      <div class="chc" onclick="go('s-creator-signup')">
+        <div style="width:48px;height:48px;border-radius:12px;background:var(--brand-lt);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px">🎓</div>
+        <h3 style="font-family:var(--fr);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:7px"><span data-nl="Ik ben een creator" data-en="I'm a creator"></span></h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px"><span data-nl="Ik wil producten verkopen, cursussen bouwen en groeien." data-en="I want to sell products, build courses and grow."></span></p>
+        <ul>
+          <li><span data-nl="Eigen storefront URL" data-en="Your own storefront URL"></span></li>
+          <li><span data-nl="iDEAL, card & PayPal" data-en="iDEAL, card & PayPal"></span></li>
+          <li><span data-nl="Automatische BTW-facturen" data-en="Automatic VAT invoices"></span></li>
+          <li><span data-nl="Affiliate programma" data-en="Affiliate programme"></span></li>
+        </ul>
+        <button class="btn bp bfull"><span data-nl="Creator account →" data-en="Creator account →"></span></button>
+      </div>
+      <div class="chc" onclick="go('s-buyer-signup')">
+        <div style="width:48px;height:48px;border-radius:12px;background:var(--green-lt);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px">🛒</div>
+        <h3 style="font-family:var(--fr);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:7px"><span data-nl="Ik ben een koper" data-en="I'm a buyer"></span></h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px"><span data-nl="Ik wil producten ontdekken, kopen en downloaden." data-en="I want to discover, buy and download products."></span></p>
+        <ul>
+          <li><span data-nl="Veilig betalen met iDEAL" data-en="Pay securely with iDEAL"></span></li>
+          <li><span data-nl="Direct toegang na betaling" data-en="Instant access after payment"></span></li>
+          <li><span data-nl="Altijd opnieuw downloaden" data-en="Always re-downloadable"></span></li>
+          <li><span data-nl="Gratis account" data-en="Free account"></span></li>
+        </ul>
+        <button class="btn bgreen bfull"><span data-nl="Koperaccount →" data-en="Buyer account →"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <footer style="padding:24px;text-align:center;border-top:1px solid var(--border);background:var(--white)">
+    <p style="font-size:12px;color:var(--muted)">© 2025 Velora · <a href="#" style="color:var(--brand)"><span data-nl="Voorwaarden" data-en="Terms"></span></a> · <a href="#" style="color:var(--brand)"><span data-nl="Privacy" data-en="Privacy"></span></a> · <a href="#" style="color:var(--brand)">GDPR</a></p>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S2 — CHOICE
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-choice">
+  <nav class="topnav">
+    <a class="logo" onclick="go('s-landing')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a>
+    <div class="nav-sep"></div>
+    <div class="lt"><div class="lb on" onclick="setLang('nl')">🇳🇱 NL</div><div class="lb" onclick="setLang('en')">🇬🇧 EN</div></div>
+    <button class="btn bg2 bsm" onclick="go('s-landing')">← <span data-nl="Terug" data-en="Back"></span></button>
+  </nav>
+  <div style="min-height:calc(100vh - 54px);display:flex;align-items:center;justify-content:center;padding:40px 24px;background:var(--surf)">
+    <div style="max-width:660px;width:100%;text-align:center">
+      <div class="eyebrow" style="margin-bottom:14px">👋 <span data-nl="Welkom bij Velora" data-en="Welcome to Velora"></span></div>
+      <h1 style="font-family:var(--fr);font-size:30px;font-weight:700;letter-spacing:-.4px;margin-bottom:7px;color:var(--ink)"><span data-nl="Hoe wil je beginnen?" data-en="How would you like to start?"></span></h1>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:32px"><span data-nl="Kies je pad — je kan later altijd wisselen." data-en="Choose your path — you can always switch later."></span></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left">
+        <div class="chc" onclick="go('s-creator-signup')">
+          <div style="font-size:26px;margin-bottom:10px">🎓</div>
+          <h3 style="font-family:var(--fr);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px">Creator</h3>
+          <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px"><span data-nl="Verkoop producten & cursussen" data-en="Sell products & courses"></span></p>
+          <ul><li><span data-nl="Eigen storefront URL" data-en="Own storefront URL"></span></li><li><span data-nl="iDEAL & Stripe" data-en="iDEAL & Stripe"></span></li><li><span data-nl="Affiliate programma" data-en="Affiliate programme"></span></li></ul>
+          <button class="btn bp bfull" style="margin-top:14px"><span data-nl="Creator →" data-en="Creator →"></span></button>
+        </div>
+        <div class="chc" onclick="go('s-buyer-signup')">
+          <div style="font-size:26px;margin-bottom:10px">🛒</div>
+          <h3 style="font-family:var(--fr);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px"><span data-nl="Koper" data-en="Buyer"></span></h3>
+          <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px"><span data-nl="Koop & download producten" data-en="Buy & download products"></span></p>
+          <ul><li><span data-nl="Veilig betalen" data-en="Secure payments"></span></li><li><span data-nl="Direct toegang" data-en="Instant access"></span></li><li><span data-nl="Altijd re-download" data-en="Always re-download"></span></li></ul>
+          <button class="btn bgreen bfull" style="margin-top:14px"><span data-nl="Koper →" data-en="Buyer →"></span></button>
+        </div>
+      </div>
+      <p class="switch-p" style="margin-top:18px"><span data-nl="Al een account?" data-en="Already have an account?"></span> <a onclick="go('s-login')"><span data-nl="Inloggen" data-en="Log in"></span></a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S3 — CREATOR SIGNUP (3 steps)
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-creator-signup">
+  <div class="auth-wrap">
+    <div class="auth-l">
+      <div class="auth-l-bg"></div><div class="auth-l-dots"></div>
+      <div style="position:relative;z-index:1">
+        <a class="logo" onclick="go('s-landing')" style="margin-bottom:32px;display:inline-flex"><div class="lmark">V</div><div class="lname" style="color:#fff">vel<span>ora</span></div></a>
+        <h2><span data-nl="Jouw winkel. <em>Jouw regels.</em>" data-en="Your store. <em>Your rules.</em>"></span></h2>
+        <p style="margin-top:10px"><span data-nl="Maak een gratis creator account. Geen maandelijkse kosten, geen verborgen fees." data-en="Create a free creator account. No monthly fees, no hidden costs."></span></p>
+        <div style="margin-top:24px">
+          <div class="auth-feat"><div class="afi">🔗</div><span data-nl="Eigen URL: velora.nl/jounaam" data-en="Your URL: velora.nl/yourname"></span></div>
+          <div class="auth-feat"><div class="afi">🇳🇱</div><span data-nl="iDEAL, Stripe, PayPal" data-en="iDEAL, Stripe, PayPal"></span></div>
+          <div class="auth-feat"><div class="afi">🧾</div><span data-nl="Automatische BTW-facturen" data-en="Automatic VAT invoices"></span></div>
+          <div class="auth-feat"><div class="afi">📈</div><span data-nl="Analytics + affiliates" data-en="Analytics + affiliates"></span></div>
+          <div class="auth-feat"><div class="afi">🌍</div><span data-nl="Verkoop wereldwijd" data-en="Sell worldwide"></span></div>
+        </div>
+      </div>
+      <div style="position:relative;z-index:1;font-size:12px;color:rgba(255,255,255,.4)"><span data-nl="Al een account?" data-en="Have an account?"></span> <a onclick="go('s-login')" style="color:var(--brand-mid);cursor:pointer;font-weight:600"><span data-nl="Inloggen" data-en="Log in"></span></a></div>
+    </div>
+    <div class="auth-r">
+      <div class="auth-form">
+        <h1 id="cst-title"><span data-nl="Account aanmaken" data-en="Create account"></span></h1>
+        <p class="auth-sub" id="cst-sub"><span data-nl="Stap 1 van 3 — Jouw gegevens" data-en="Step 1 of 3 — Your details"></span></p>
+        <!-- STEPPER -->
+        <div class="stepper">
+          <div class="spc on" id="sp1">1</div><div class="sln" id="sl1"></div>
+          <div class="spc" id="sp2">2</div><div class="sln" id="sl2"></div>
+          <div class="spc" id="sp3">3</div>
+        </div>
+        <!-- STEP 1 -->
+        <div class="spanel on" id="cp1">
+          <button class="btn bgoog" onclick="toast(lang==='nl'?'Google login beschikbaar in live versie':'Google login available in live version')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            <span data-nl="Doorgaan met Google" data-en="Continue with Google"></span>
+          </button>
+          <div class="fdiv"><span data-nl="of met e-mail" data-en="or with email"></span></div>
+          <div class="fr2"><div class="fg"><label class="fl"><span data-nl="Voornaam" data-en="First name"></span></label><input class="fi" placeholder="Jana"></div><div class="fg"><label class="fl"><span data-nl="Achternaam" data-en="Last name"></span></label><input class="fi" placeholder="Bakker"></div></div>
+          <div class="fg"><label class="fl"><span data-nl="E-mailadres" data-en="Email address"></span></label><input class="fi" type="email" placeholder="jana@email.nl" id="c-email"></div>
+          <div class="fg"><label class="fl"><span data-nl="Wachtwoord" data-en="Password"></span></label><input class="fi" type="password" placeholder="••••••••" oninput="pwStr(this.value,'ca')"><div class="pw-bars"><div class="pw-bar" id="ca1"></div><div class="pw-bar" id="ca2"></div><div class="pw-bar" id="ca3"></div><div class="pw-bar" id="ca4"></div></div></div>
+          <button class="btn bp bfull" onclick="csStep(2)"><span data-nl="Volgende stap →" data-en="Next step →"></span></button>
+          <p class="terms-p"><span data-nl="Door te registreren ga je akkoord met onze" data-en="By signing up you agree to our"></span> <a href="#"><span data-nl="Voorwaarden" data-en="Terms"></span></a> &amp; <a href="#"><span data-nl="Privacy" data-en="Privacy"></span></a>.</p>
+        </div>
+        <!-- STEP 2 -->
+        <div class="spanel" id="cp2">
+          <div style="width:62px;height:62px;border-radius:50%;background:var(--surf2);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;margin:0 auto 14px" onclick="toast(lang==='nl'?'Foto upload in live versie':'Photo upload in live version')">📷</div>
+          <div class="fg"><label class="fl"><span data-nl="Weergavenaam" data-en="Display name"></span></label><input class="fi" placeholder="Jana Bakker" id="c-disp"></div>
+          <div class="fg">
+            <label class="fl"><span data-nl="Jouw storefront URL" data-en="Your storefront URL"></span></label>
+            <div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden" id="slug-wrap">
+              <span style="padding:9px 11px;background:var(--surf2);color:var(--muted);font-size:12.5px;border-right:1.5px solid var(--border);white-space:nowrap">velora.nl/</span>
+              <input style="border:none;outline:none;padding:9px 11px;font-family:var(--js);font-size:13px;color:var(--brand);font-weight:600;width:100%;background:transparent" placeholder="jounaam" id="c-slug" oninput="chkSlug(this.value)">
+            </div>
+            <div class="fhint" id="slug-hint"><span data-nl="Kies een naam — dit wordt jouw link" data-en="Choose a name — this becomes your link"></span></div>
+          </div>
+          <div class="fg"><label class="fl">Bio</label><textarea class="fi" rows="2" style="resize:none" id="c-bio" placeholder="Designer & educator..."></textarea></div>
+          <div class="fg"><label class="fl"><span data-nl="Categorie" data-en="Category"></span></label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px"><div class="chip on" onclick="this.classList.toggle('on')">📈 Marketing</div><div class="chip" onclick="this.classList.toggle('on')">🎨 Design</div><div class="chip" onclick="this.classList.toggle('on')">💰 Finance</div><div class="chip" onclick="this.classList.toggle('on')">💻 Tech</div><div class="chip" onclick="this.classList.toggle('on')">📸 Photo</div><div class="chip" onclick="this.classList.toggle('on')">🧘 Lifestyle</div></div></div>
+          <div style="display:flex;gap:9px"><button class="btn bg2" style="flex:1;padding:10px" onclick="csStep(1)">←</button><button class="btn bp" style="flex:2;padding:10px" onclick="csStep(3)"><span data-nl="Volgende →" data-en="Next →"></span></button></div>
+        </div>
+        <!-- STEP 3 -->
+        <div class="spanel" id="cp3">
+          <div style="background:var(--brand-lt);border:1px solid rgba(91,79,232,.18);border-radius:9px;padding:12px 14px;margin-bottom:14px;display:flex;gap:9px">
+            <span style="font-size:16px">💡</span>
+            <div style="font-size:12px;color:var(--brand);line-height:1.5"><span data-nl="Je kan dit later invullen. Je hebt IBAN nodig voor uitbetalingen." data-en="You can fill this in later. You need IBAN for payouts."></span></div>
+          </div>
+          <div class="fg"><label class="fl">IBAN</label><input class="fi" placeholder="NL29 ABNA 0473 1435 40"></div>
+          <div class="fg"><label class="fl"><span data-nl="Land" data-en="Country"></span></label><select class="fi" style="cursor:pointer"><option>🇳🇱 Nederland</option><option>🇧🇪 België</option><option>🇩🇪 Duitsland</option><option>🇳🇬 Nigeria</option><option>🌍 <span data-nl="Ander" data-en="Other"></span></option></select></div>
+          <div class="fg"><label class="fl"><span data-nl="BTW-nummer (optioneel)" data-en="VAT number (optional)"></span></label><input class="fi" placeholder="NL123456789B01"></div>
+          <div style="display:flex;gap:9px"><button class="btn bg2" style="flex:1;padding:10px" onclick="csStep(2)">←</button><button class="btn bp" style="flex:2;padding:10px" onclick="go('s-creator-success')">🚀 <span data-nl="Account aanmaken" data-en="Create account"></span></button></div>
+          <p class="switch-p"><a onclick="go('s-creator-success')" style="cursor:pointer"><span data-nl="Overslaan →" data-en="Skip →"></span></a></p>
+        </div>
+        <p class="switch-p"><span data-nl="Al een account?" data-en="Have an account?"></span> <a onclick="go('s-login')"><span data-nl="Inloggen" data-en="Log in"></span></a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S4 — BUYER SIGNUP
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-buyer-signup">
+  <div class="auth-wrap">
+    <div class="auth-l" style="background:linear-gradient(160deg,#0D1A0F 0%,#0A3020 100%)">
+      <div class="auth-l-dots"></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 80%,rgba(10,122,74,.32) 0%,transparent 60%);pointer-events:none"></div>
+      <div style="position:relative;z-index:1">
+        <a class="logo" onclick="go('s-landing')" style="margin-bottom:28px;display:inline-flex"><div class="lmark" style="background:var(--green)">V</div><div class="lname" style="color:#fff">vel<span style="color:var(--green)">ora</span></div></a>
+        <h2><span data-nl="Ontdek de beste <em>creators.</em>" data-en="Discover the best <em>creators.</em>"></span></h2>
+        <p style="margin-top:10px"><span data-nl="Koop ebooks, cursussen en templates. Direct beschikbaar, altijd opnieuw te downloaden." data-en="Buy ebooks, courses and templates. Instantly available, always re-downloadable."></span></p>
+        <div style="margin-top:22px">
+          <div class="auth-feat"><div class="afi" style="background:rgba(10,122,74,.28);border-color:rgba(10,122,74,.4)">🔒</div><span data-nl="Veilig betalen met iDEAL" data-en="Pay securely with iDEAL"></span></div>
+          <div class="auth-feat"><div class="afi" style="background:rgba(10,122,74,.28);border-color:rgba(10,122,74,.4)">⚡</div><span data-nl="Direct toegang na betaling" data-en="Instant access after payment"></span></div>
+          <div class="auth-feat"><div class="afi" style="background:rgba(10,122,74,.28);border-color:rgba(10,122,74,.4)">♾️</div><span data-nl="Altijd opnieuw downloaden" data-en="Always re-downloadable"></span></div>
+          <div class="auth-feat"><div class="afi" style="background:rgba(10,122,74,.28);border-color:rgba(10,122,74,.4)">🧾</div><span data-nl="BTW-factuur inbegrepen" data-en="VAT invoice included"></span></div>
+        </div>
+      </div>
+      <div style="position:relative;z-index:1;font-size:12px;color:rgba(255,255,255,.4)"><span data-nl="Gratis account · Geen abonnement" data-en="Free account · No subscription"></span></div>
+    </div>
+    <div class="auth-r">
+      <div class="auth-form">
+        <h1><span data-nl="Koperaccount aanmaken" data-en="Create buyer account"></span></h1>
+        <p class="auth-sub"><span data-nl="Gratis — direct aan de slag" data-en="Free — start right away"></span></p>
+        <button class="btn bgoog" onclick="toast(lang==='nl'?'Google login in live versie':'Google login in live version')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span data-nl="Doorgaan met Google" data-en="Continue with Google"></span>
+        </button>
+        <div class="fdiv"><span data-nl="of met e-mail" data-en="or with email"></span></div>
+        <div class="fr2"><div class="fg"><label class="fl"><span data-nl="Voornaam" data-en="First name"></span></label><input class="fi" placeholder="Jana"></div><div class="fg"><label class="fl"><span data-nl="Achternaam" data-en="Last name"></span></label><input class="fi" placeholder="Bakker"></div></div>
+        <div class="fg"><label class="fl"><span data-nl="E-mailadres" data-en="Email"></span></label><input class="fi" type="email" placeholder="jana@email.nl"></div>
+        <div class="fg"><label class="fl"><span data-nl="Wachtwoord" data-en="Password"></span></label><input class="fi" type="password" placeholder="••••••••" oninput="pwStr(this.value,'cb')"><div class="pw-bars"><div class="pw-bar" id="cb1"></div><div class="pw-bar" id="cb2"></div><div class="pw-bar" id="cb3"></div><div class="pw-bar" id="cb4"></div></div></div>
+        <div class="fg"><label class="fl"><span data-nl="Land" data-en="Country"></span></label><select class="fi" style="cursor:pointer"><option>🇳🇱 Nederland</option><option>🇧🇪 België</option><option>🇩🇪 Duitsland</option><option>🇬🇧 UK</option><option>🇳🇬 Nigeria</option><option>🌍 Other</option></select></div>
+        <button class="btn bgreen bfull" onclick="go('s-buyer-success')"><span data-nl="Gratis account aanmaken →" data-en="Create free account →"></span></button>
+        <p class="terms-p"><span data-nl="Door te registreren ga je akkoord met onze" data-en="By signing up you agree to our"></span> <a href="#"><span data-nl="Voorwaarden" data-en="Terms"></span></a> &amp; <a href="#"><span data-nl="Privacy" data-en="Privacy"></span></a>.</p>
+        <p class="switch-p"><span data-nl="Al een account?" data-en="Have an account?"></span> <a onclick="go('s-login')"><span data-nl="Inloggen" data-en="Log in"></span></a></p>
+        <p class="switch-p"><span data-nl="Wil je ook verkopen?" data-en="Want to sell too?"></span> <a onclick="go('s-creator-signup')"><span data-nl="Creator account →" data-en="Creator account →"></span></a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S5 — LOGIN
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-login">
+  <div class="auth-wrap">
+    <div class="auth-l">
+      <div class="auth-l-bg"></div><div class="auth-l-dots"></div>
+      <div style="position:relative;z-index:1">
+        <a class="logo" onclick="go('s-landing')" style="margin-bottom:28px;display:inline-flex"><div class="lmark">V</div><div class="lname" style="color:#fff">vel<span>ora</span></div></a>
+        <h2><span data-nl="Welkom <em>terug.</em>" data-en="Welcome <em>back.</em>"></span></h2>
+        <p style="margin-top:10px"><span data-nl="Log in en ga verder waar je gebleven was." data-en="Log in and continue where you left off."></span></p>
+        <div style="margin-top:22px">
+          <div class="auth-feat"><div class="afi">📊</div><span data-nl="Bekijk je sales & omzet" data-en="View your sales & revenue"></span></div>
+          <div class="auth-feat"><div class="afi">📦</div><span data-nl="Beheer je producten" data-en="Manage your products"></span></div>
+          <div class="auth-feat"><div class="afi">💸</div><span data-nl="Bekijk uitbetalingen" data-en="Check payouts"></span></div>
+        </div>
+      </div>
+      <div style="position:relative;z-index:1;font-size:12px;color:rgba(255,255,255,.4)"><span data-nl="Nog geen account?" data-en="No account yet?"></span> <a onclick="go('s-choice')" style="color:var(--brand-mid);cursor:pointer;font-weight:600"><span data-nl="Gratis registreren" data-en="Register for free"></span></a></div>
+    </div>
+    <div class="auth-r">
+      <div class="auth-form">
+        <h1><span data-nl="Inloggen" data-en="Log in"></span></h1>
+        <p class="auth-sub"><span data-nl="Goed om je terug te zien 👋" data-en="Good to see you back 👋"></span></p>
+        <button class="btn bgoog" onclick="toast(lang==='nl'?'Google login in live versie':'Google login in live version')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span data-nl="Doorgaan met Google" data-en="Continue with Google"></span>
+        </button>
+        <div class="fdiv"><span data-nl="of met e-mail" data-en="or with email"></span></div>
+        <div class="fg"><label class="fl"><span data-nl="E-mailadres" data-en="Email"></span></label><input class="fi" type="email" placeholder="jana@email.nl"></div>
+        <div class="fg"><label class="fl" style="display:flex;justify-content:space-between"><span data-nl="Wachtwoord" data-en="Password"></span><a href="#" style="color:var(--brand);font-size:11px;font-weight:500"><span data-nl="Vergeten?" data-en="Forgot?"></span></a></label><input class="fi" type="password" placeholder="••••••••"></div>
+        <button class="btn bp bfull" onclick="go('s-dash');dPage('dashboard')"><span data-nl="Inloggen →" data-en="Log in →"></span></button>
+        <p class="switch-p"><span data-nl="Nog geen account?" data-en="No account yet?"></span> <a onclick="go('s-choice')"><span data-nl="Gratis registreren" data-en="Register for free"></span></a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S6 — CREATOR SUCCESS
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-creator-success">
+  <nav class="topnav"><a class="logo" onclick="go('s-landing')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a><div class="nav-sep"></div><div class="lt"><div class="lb on" onclick="setLang('nl')">🇳🇱 NL</div><div class="lb" onclick="setLang('en')">🇬🇧 EN</div></div></nav>
+  <div style="min-height:calc(100vh - 54px);display:flex;align-items:center;justify-content:center;padding:40px 24px">
+    <div class="succ-card fu">
+      <div class="succ-icon" style="background:var(--brand-lt);border:2px solid rgba(91,79,232,.2)">🎉</div>
+      <h1 style="font-family:var(--fr);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.4px;margin-bottom:8px"><span data-nl="Je bent live!" data-en="You're live!"></span></h1>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.65;margin-bottom:22px"><span data-nl="Je creator account is aangemaakt. Je storefront is direct beschikbaar!" data-en="Your creator account is ready. Your storefront is live!"></span></p>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:var(--brand-lt);border:1.5px solid rgba(91,79,232,.22);border-radius:10px;padding:11px 15px;margin-bottom:18px">
+        <span style="font-family:var(--fr);font-size:14px;font-weight:700;color:var(--brand)">velora.nl/jana</span>
+        <button class="btn bp bsm" onclick="copyLink('velora.nl/jana')">⎘ <span data-nl="Kopieer" data-en="Copy"></span></button>
+      </div>
+      <div style="margin-bottom:22px">
+        <div class="succ-step"><div class="ss-n" style="background:var(--brand)">1</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Voeg je eerste product toe" data-en="Add your first product"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="Upload een ebook, cursus of template" data-en="Upload an ebook, course or template"></span></div></div></div>
+        <div class="succ-step"><div class="ss-n" style="background:var(--brand)">2</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Deel je storefront link" data-en="Share your storefront link"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="Deel velora.nl/jana op je socials" data-en="Share velora.nl/jana on your socials"></span></div></div></div>
+        <div class="succ-step"><div class="ss-n" style="background:var(--brand)">3</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Koppel je bankrekening" data-en="Connect your bank account"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="Voeg IBAN toe voor uitbetalingen" data-en="Add IBAN for payouts"></span></div></div></div>
+      </div>
+      <button class="btn bp bfull" style="font-size:14px;padding:13px" onclick="go('s-dash');dPage('dashboard')"><span data-nl="Naar mijn dashboard →" data-en="Go to my dashboard →"></span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S7 — BUYER SUCCESS
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-buyer-success">
+  <nav class="topnav"><a class="logo" onclick="go('s-landing')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a><div class="nav-sep"></div><div class="lt"><div class="lb on" onclick="setLang('nl')">🇳🇱 NL</div><div class="lb" onclick="setLang('en')">🇬🇧 EN</div></div></nav>
+  <div style="min-height:calc(100vh - 54px);display:flex;align-items:center;justify-content:center;padding:40px 24px">
+    <div class="succ-card fu">
+      <div class="succ-icon" style="background:var(--green-lt);border:2px solid #9FE1CB">✅</div>
+      <h1 style="font-family:var(--fr);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.4px;margin-bottom:8px"><span data-nl="Account aangemaakt!" data-en="Account created!"></span></h1>
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.65;margin-bottom:22px"><span data-nl="Welkom bij Velora. Ontdek en koop producten van creators." data-en="Welcome to Velora. Discover and buy products from creators."></span></p>
+      <div style="margin-bottom:22px">
+        <div class="succ-step"><div class="ss-n" style="background:var(--green)">1</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Ontdek producten" data-en="Discover products"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="Blader door ebooks, cursussen en templates" data-en="Browse ebooks, courses and templates"></span></div></div></div>
+        <div class="succ-step"><div class="ss-n" style="background:var(--green)">2</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Betaal veilig met iDEAL" data-en="Pay securely with iDEAL"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="BTW-factuur bij elke aankoop" data-en="VAT invoice with every purchase"></span></div></div></div>
+        <div class="succ-step"><div class="ss-n" style="background:var(--green)">3</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Download altijd opnieuw" data-en="Re-download any time"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="Al je aankopen in je account" data-en="All purchases in your account"></span></div></div></div>
+      </div>
+      <button class="btn bgreen bfull" style="font-size:14px;padding:13px" onclick="go('s-explore-pub')"><span data-nl="Ontdek producten →" data-en="Discover products →"></span></button>
+      <p class="switch-p" style="margin-top:12px"><span data-nl="Wil je ook verkopen?" data-en="Want to sell too?"></span> <a onclick="go('s-creator-signup')"><span data-nl="Creator account →" data-en="Creator account →"></span></a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S8 — PUBLIC EXPLORE PAGE (for visitors)
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-explore-pub">
+  <nav class="topnav">
+    <a class="logo" onclick="go('s-landing')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a>
+    <div class="nav-sep"></div>
+    <div class="lt"><div class="lb on" onclick="setLang('nl')">🇳🇱 NL</div><div class="lb" onclick="setLang('en')">🇬🇧 EN</div></div>
+    <button class="btn bg2 bsm" onclick="go('s-login')"><span data-nl="Inloggen" data-en="Log in"></span></button>
+    <button class="btn bp bsm" onclick="go('s-choice')"><span data-nl="Registreer" data-en="Sign up"></span></button>
+  </nav>
+  <div style="padding:22px 28px">
+    <input class="fi" style="font-size:13px;padding:10px 14px;margin-bottom:16px" placeholder="🔍 Zoek op product, creator of categorie...">
+    <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:9px"><span data-nl="Categorieën" data-en="Categories"></span></div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:18px">
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">📈</div><div style="font-size:12px;font-weight:600">Marketing</div><div style="font-size:10px;color:var(--muted)">142 <span data-nl="producten" data-en="products"></span></div></div>
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">🎨</div><div style="font-size:12px;font-weight:600">Design</div><div style="font-size:10px;color:var(--muted)">98 <span data-nl="producten" data-en="products"></span></div></div>
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">💰</div><div style="font-size:12px;font-weight:600">Finance</div><div style="font-size:10px;color:var(--muted)">74 <span data-nl="producten" data-en="products"></span></div></div>
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">💻</div><div style="font-size:12px;font-weight:600">Tech & Code</div><div style="font-size:10px;color:var(--muted)">89 <span data-nl="producten" data-en="products"></span></div></div>
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">📸</div><div style="font-size:12px;font-weight:600">Photography</div><div style="font-size:10px;color:var(--muted)">61 <span data-nl="producten" data-en="products"></span></div></div>
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">🧘</div><div style="font-size:12px;font-weight:600">Lifestyle</div><div style="font-size:10px;color:var(--muted)">53 <span data-nl="producten" data-en="products"></span></div></div>
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">📝</div><div style="font-size:12px;font-weight:600">Writing</div><div style="font-size:10px;color:var(--muted)">44 <span data-nl="producten" data-en="products"></span></div></div>
+      <div class="cc"><div style="font-size:20px;margin-bottom:4px">🎵</div><div style="font-size:12px;font-weight:600">Music</div><div style="font-size:10px;color:var(--muted)">37 <span data-nl="producten" data-en="products"></span></div></div>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:9px">🔥 <span data-nl="Trending nu" data-en="Trending now"></span></div>
+    <div class="g4" style="margin-bottom:18px">
+      <div class="ec2" onclick="go('s-checkout')"><div class="eth" style="background:#EBF0FB">🎓</div><div style="padding:9px 10px"><div style="font-size:10px;color:var(--muted)">Amara Kofi</div><div class="en2">UI Design Masterclass</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€24.99</span><span class="badge badgeo">🔥 Hot</span></div></div></div>
+      <div class="ec2" onclick="go('s-checkout')"><div class="eth" style="background:#FFF8E8">📈</div><div style="padding:9px 10px"><div style="font-size:10px;color:var(--muted)">Tom Bakker</div><div class="en2"><span data-nl="Instagram Groeiplan" data-en="Instagram Growth Plan"></span></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€12.99</span><span class="badge badgeg">⭐ Top</span></div></div></div>
+      <div class="ec2" onclick="go('s-checkout')"><div class="eth" style="background:#F0FFF4">💰</div><div style="padding:9px 10px"><div style="font-size:10px;color:var(--muted)">Sarah Jansen</div><div class="en2"><span data-nl="Beleggen voor beginners" data-en="Investing for beginners"></span></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€19.99</span><span class="badge badgep"><span data-nl="Nieuw" data-en="New"></span></span></div></div></div>
+      <div class="ec2" onclick="go('s-checkout')"><div class="eth" style="background:#FFF0EB">🧩</div><div style="padding:9px 10px"><div style="font-size:10px;color:var(--muted)">Amara Kofi</div><div class="en2">Notion Templates Pack</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€3.99</span><span class="badge badgeg">⭐ Top</span></div></div></div>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:9px">⭐ <span data-nl="Featured creators" data-en="Featured creators"></span></div>
+    <div class="g3">
+      <div class="ec2" style="display:flex;align-items:center;gap:10px;padding:12px"><div class="av-sm">AK</div><div><div style="font-size:13px;font-weight:600">Amara Kofi</div><div style="font-size:11px;color:var(--muted)">🎨 Design · 4 <span data-nl="producten" data-en="products"></span></div></div></div>
+      <div class="ec2" style="display:flex;align-items:center;gap:10px;padding:12px"><div class="av-sm" style="background:var(--brand-mid)">TB</div><div><div style="font-size:13px;font-weight:600">Tom Bakker</div><div style="font-size:11px;color:var(--muted)">📈 Marketing · 7 <span data-nl="producten" data-en="products"></span></div></div></div>
+      <div class="ec2" style="display:flex;align-items:center;gap:10px;padding:12px"><div class="av-sm" style="background:var(--green)">SJ</div><div><div style="font-size:13px;font-weight:600">Sarah Jansen</div><div style="font-size:11px;color:var(--muted)">💰 Finance · 5 <span data-nl="producten" data-en="products"></span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S9 — CHECKOUT (public)
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-checkout">
+  <nav class="topnav"><a class="logo" onclick="go('s-explore-pub')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a><div class="nav-sep"></div><button class="btn bg2 bsm" onclick="go('s-explore-pub')">← <span data-nl="Terug" data-en="Back"></span></button></nav>
+  <div style="padding:22px 28px">
+    <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Afrekenen" data-en="Checkout"></span></div><div class="dash-ps"><span data-nl="Veilig betalen · BTW-factuur inbegrepen" data-en="Secure payment · VAT invoice included"></span></div></div></div>
+    <div class="co-wrap">
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="ct"><span data-nl="Jouw gegevens" data-en="Your details"></span></div>
+          <div class="fr2"><div class="fg"><label class="fl"><span data-nl="Voornaam" data-en="First name"></span></label><input class="fi" style="margin-bottom:0" placeholder="Jana"></div><div class="fg"><label class="fl"><span data-nl="Achternaam" data-en="Last name"></span></label><input class="fi" style="margin-bottom:0" placeholder="de Vries"></div></div>
+          <label class="fl" style="margin-top:10px"><span data-nl="E-mailadres" data-en="Email"></span></label><input class="fi" placeholder="jana@email.nl">
+          <label class="fl"><span data-nl="Land" data-en="Country"></span></label><select class="fi" style="margin-bottom:0;cursor:pointer"><option>🇳🇱 Nederland</option><option>🇧🇪 België</option><option>🇩🇪 Duitsland</option><option>🇳🇬 Nigeria</option><option>🌍 Other</option></select>
+        </div>
+        <div class="card">
+          <div class="ct"><span data-nl="Betaalmethode" data-en="Payment method"></span></div>
+          <div class="pm on" onclick="selPay(this)"><div style="font-size:8px;font-weight:700;background:#00A3E0;color:#fff;padding:2px 5px;border-radius:3px;min-width:34px;text-align:center">iDEAL</div><div><div style="font-size:12.5px;font-weight:600">iDEAL</div><div style="font-size:11px;color:var(--muted)"><span data-nl="Directe betaling via jouw bank" data-en="Direct payment via your bank"></span></div></div></div>
+          <div class="pm" onclick="selPay(this)"><span style="font-size:16px">💳</span><div><div style="font-size:12.5px;font-weight:600"><span data-nl="Creditcard / Debitcard" data-en="Credit card / Debit card"></span></div><div style="font-size:11px;color:var(--muted)">Visa, Mastercard, Amex</div></div></div>
+          <div class="pm" onclick="selPay(this)"><div style="width:30px;height:18px;background:#003087;border-radius:3px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:8px;font-weight:700">PP</div><div><div style="font-size:12.5px;font-weight:600">PayPal</div><div style="font-size:11px;color:var(--muted)"><span data-nl="Betaal via PayPal" data-en="Pay via PayPal"></span></div></div></div>
+          <button class="btn bp bfull" style="margin-top:12px;padding:12px;font-size:14px" onclick="go('s-buyer-success')">🔒 <span data-nl="Betaal €30.24" data-en="Pay €30.24"></span></button>
+          <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:7px"><span data-nl="Direct je product + BTW-factuur per e-mail" data-en="Instant product + VAT invoice by email"></span></div>
+        </div>
+      </div>
+      <div class="order-sum">
+        <div style="font-size:10px;font-weight:700;color:var(--ink);margin-bottom:10px;letter-spacing:.4px"><span data-nl="JOUW BESTELLING" data-en="YOUR ORDER"></span></div>
+        <div style="border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:10px">
+          <div style="height:72px;background:#EBF0FB;display:flex;align-items:center;justify-content:center;font-size:28px">🎓</div>
+          <div style="padding:10px 12px"><div style="font-size:12.5px;font-weight:600">UI Design Masterclass</div><div style="font-size:11px;color:var(--muted)"><span data-nl="door" data-en="by"></span> Amara Kofi</div><div style="font-size:11px;color:var(--green);margin-top:4px">✓ <span data-nl="Direct toegang na betaling" data-en="Instant access after payment"></span></div></div>
+        </div>
+        <div style="background:var(--green-lt);border-radius:8px;padding:9px;margin-bottom:10px">
+          <div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:2px"><span data-nl="Upsell aanbieding 🎁" data-en="Special offer 🎁"></span></div>
+          <div style="font-size:11px;color:var(--green)"><span data-nl="Voeg Notion Pack toe voor €2.99 extra" data-en="Add Notion Pack for €2.99 extra"></span></div>
+          <button class="btn bsm" style="margin-top:5px;color:var(--green);border:1px solid var(--green);background:transparent;font-size:10px;padding:3px 8px"><span data-nl="Toevoegen" data-en="Add"></span></button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:3px"><span data-nl="Subtotaal" data-en="Subtotal"></span><span>€24.99</span></div>
+        <div style="font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:8px"><span data-nl="BTW (21%)" data-en="VAT (21%)"></span><span>€5.25</span></div>
+        <div style="font-size:13.5px;font-weight:700;display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:8px"><span data-nl="Totaal" data-en="Total"></span><span style="font-family:var(--fr)">€30.24</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  S10 — CREATOR DASHBOARD (full app)
+═══════════════════════════════════════════ -->
+<div class="screen" id="s-dash">
+<div class="dash-app">
+  <!-- TOP BAR -->
+  <div class="dash-top">
+    <a class="logo" onclick="go('s-landing')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a>
+    <div style="display:flex;gap:3px;margin-left:10px">
+      <div class="nav-link on" id="dt-creator" onclick="setDashSection('creator')"><span data-nl="👤 Creator" data-en="👤 Creator"></span></div>
+      <div class="nav-link" id="dt-explore" onclick="setDashSection('explore')"><span data-nl="🔍 Ontdekken" data-en="🔍 Explore"></span></div>
+      <div class="nav-link" id="dt-checkout" onclick="setDashSection('checkout')"><span data-nl="🛒 Checkout" data-en="🛒 Checkout"></span></div>
+      <div class="nav-link" id="dt-buyer" onclick="setDashSection('buyer')"><span data-nl="📦 Koper" data-en="📦 Buyer"></span></div>
+    </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <div style="display:flex;align-items:center;gap:5px;background:var(--brand-lt);border:1px solid rgba(91,79,232,.2);border-radius:20px;padding:4px 10px 4px 8px;cursor:pointer" onclick="copyLink('velora.nl/amara')">
+        <div style="width:5px;height:5px;border-radius:50%;background:var(--brand)"></div>
+        <span style="font-size:11.5px;font-weight:600;color:var(--brand)">velora.nl/amara</span>
+        <span style="font-size:11px;color:var(--brand);opacity:.6">⎘</span>
+      </div>
+      <div class="lt"><div class="lb on" id="dlbn" onclick="setLang('nl')">🇳🇱 NL</div><div class="lb" id="dlbe" onclick="setLang('en')">🇬🇧 EN</div></div>
+      <div class="av-sm">AK</div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR creator -->
+  <div class="dash-side" id="dsb-creator">
+    <div class="dsg"><span data-nl="Overzicht" data-en="Overview"></span></div>
+    <div class="dsi on" id="dsi-dashboard" onclick="dPage('dashboard')">📊 <span data-nl="Dashboard" data-en="Dashboard"></span></div>
+    <div class="dsi" id="dsi-storefront" onclick="dPage('storefront')">🏪 <span data-nl="Mijn storefront" data-en="My storefront"></span></div>
+    <div class="dsg"><span data-nl="Producten" data-en="Products"></span></div>
+    <div class="dsi" id="dsi-products" onclick="dPage('products')">📦 <span data-nl="Producten" data-en="Products"></span></div>
+    <div class="dsi" id="dsi-addprod" onclick="dPage('addprod')">➕ <span data-nl="Nieuw product" data-en="New product"></span></div>
+    <div class="dsg"><span data-nl="Marketing" data-en="Marketing"></span></div>
+    <div class="dsi" id="dsi-affiliates" onclick="dPage('affiliates')">🔗 Affiliates</div>
+    <div class="dsi" id="dsi-discounts" onclick="dPage('discounts')">🏷️ <span data-nl="Kortingscodes" data-en="Discount codes"></span></div>
+    <div class="dsg"><span data-nl="Financiën" data-en="Finance"></span></div>
+    <div class="dsi" id="dsi-payouts" onclick="dPage('payouts')">💸 <span data-nl="Uitbetalingen" data-en="Payouts"></span></div>
+    <div class="dsi" id="dsi-analytics" onclick="dPage('analytics')">📈 Analytics</div>
+    <div class="dsi" id="dsi-notifs" onclick="dPage('notifs')">🔔 <span data-nl="Notificaties" data-en="Notifications"></span> <span class="nbadge">3</span></div>
+    <div style="margin-top:auto;padding:9px 6px;border-top:1px solid var(--border)">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:9px 11px">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px"><div class="av-sm" style="width:24px;height:24px;font-size:9px">AK</div><div><div style="font-size:11.5px;font-weight:600">Amara Kofi</div><div style="font-size:10px;color:var(--muted)">velora.nl/amara</div></div></div>
+        <div class="cm-stats"><div><div class="cmv">317</div><div class="cml"><span data-nl="sales" data-en="sales"></span></div></div><div><div class="cmv">€4.8K</div><div class="cml"><span data-nl="omzet" data-en="revenue"></span></div></div><div><div class="cmv">28</div><div class="cml">affiliates</div></div></div>
+      </div>
+      <div class="sb-pill" onclick="copyLink('velora.nl/amara')"><span class="sb-pill-url">velora.nl/amara</span><span class="sb-pill-copy">⎘ <span data-nl="Kopieer" data-en="Copy"></span></span></div>
+      <button class="btn bg2" style="width:100%;margin-top:7px;font-size:11.5px;padding:6px" onclick="go('s-landing')">← <span data-nl="Naar homepage" data-en="To homepage"></span></button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR explore -->
+  <div class="dash-side" id="dsb-explore" style="display:none">
+    <div class="dsg"><span data-nl="Ontdekken" data-en="Discover"></span></div>
+    <div class="dsi on">🔥 <span data-nl="Trending" data-en="Trending"></span></div>
+    <div class="dsi">✨ <span data-nl="Nieuw" data-en="New arrivals"></span></div>
+    <div class="dsi">⭐ Featured</div>
+    <div class="dsg"><span data-nl="Categorieën" data-en="Categories"></span></div>
+    <div class="dsi">📈 Marketing</div>
+    <div class="dsi">🎨 Design</div>
+    <div class="dsi">💰 Finance</div>
+    <div class="dsi">📸 Photography</div>
+    <div class="dsi">💻 Tech</div>
+    <div class="dsi">🧘 Lifestyle</div>
+    <div style="padding:9px 6px;margin-top:auto"><input class="fi" style="margin-bottom:0;font-size:12px;padding:7px 10px" data-nl-placeholder="🔍 Zoek producten..." data-en-placeholder="🔍 Search products..." placeholder="🔍 Zoek producten..."></div>
+  </div>
+
+  <!-- SIDEBAR checkout -->
+  <div class="dash-side" id="dsb-checkout" style="display:none">
+    <div style="padding:11px 7px">
+      <div class="dsg"><span data-nl="Bestelling" data-en="Order"></span></div>
+      <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:6px">
+        <div style="height:60px;background:#EBF0FB;display:flex;align-items:center;justify-content:center;font-size:24px">🎓</div>
+        <div style="padding:9px 11px">
+          <div style="font-size:12px;font-weight:600">UI Design Masterclass</div>
+          <div style="font-size:10.5px;color:var(--muted)"><span data-nl="door" data-en="by"></span> Amara Kofi</div>
+          <div style="border-top:1px solid var(--border);margin-top:7px;padding-top:7px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:2px"><span data-nl="Prijs" data-en="Price"></span><span>€24.99</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:2px"><span data-nl="BTW" data-en="VAT"></span><span>€5.25</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;margin-top:4px"><span data-nl="Totaal" data-en="Total"></span><span>€30.24</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--green-lt);border-radius:7px;padding:9px;margin-top:9px">
+        <div style="font-size:10.5px;font-weight:600;color:var(--green);margin-bottom:2px"><span data-nl="Upsell 🎁" data-en="Special offer 🎁"></span></div>
+        <div style="font-size:10.5px;color:var(--green)"><span data-nl="Notion Pack voor €2.99 extra" data-en="Notion Pack for €2.99 extra"></span></div>
+        <button class="btn bsm" style="margin-top:5px;color:var(--green);border:1px solid var(--green);background:transparent;font-size:10px"><span data-nl="Toevoegen" data-en="Add"></span></button>
+      </div>
+      <input class="fi" style="font-size:12px;padding:7px 10px;margin-top:9px;margin-bottom:5px" data-nl-placeholder="Kortingscode..." data-en-placeholder="Discount code..." placeholder="Kortingscode...">
+      <button class="btn bg2" style="width:100%;font-size:12px;padding:6px"><span data-nl="Toepassen" data-en="Apply"></span></button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR buyer -->
+  <div class="dash-side" id="dsb-buyer" style="display:none">
+    <div class="dsg"><span data-nl="Mijn account" data-en="My account"></span></div>
+    <div class="dsi on">📦 <span data-nl="Mijn aankopen" data-en="My purchases"></span></div>
+    <div class="dsi">⬇️ Downloads</div>
+    <div class="dsi">🧾 <span data-nl="Facturen" data-en="Invoices"></span></div>
+    <div class="dsi">↩️ <span data-nl="Terugbetaling" data-en="Refunds"></span></div>
+    <div class="dsi">⚙️ <span data-nl="Instellingen" data-en="Settings"></span></div>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div class="dash-main" id="dash-main-area">
+
+    <!-- DASHBOARD -->
+    <div class="pg2 on" id="dp-dashboard">
+      <div class="dash-ph"><div><div class="dash-pt">Dashboard</div><div class="dash-ps"><span data-nl="Welkom terug, Amara 👋" data-en="Welcome back, Amara 👋"></span></div></div><button class="btn bp bsm" onclick="dPage('addprod')">+ <span data-nl="Nieuw product" data-en="New product"></span></button></div>
+      <div class="share-bar"><div style="font-size:16px;flex-shrink:0">🔗</div><div style="flex:1;min-width:0"><div class="sb-label"><span data-nl="JOUW PUBLIEKE STOREFRONT" data-en="YOUR PUBLIC STOREFRONT"></span></div><div class="sb-url">velora.nl/amara</div></div><div style="display:flex;gap:6px"><button class="sb-btn" onclick="copyLink('velora.nl/amara')">⎘ <span data-nl="Kopieer" data-en="Copy"></span></button><button class="sb-btn wh" onclick="dPage('storefront')"><span data-nl="Bekijk →" data-en="View →"></span></button></div></div>
+      <div class="sg2">
+        <div class="sc"><div class="sl"><span data-nl="OMZET TOTAAL" data-en="TOTAL REVENUE"></span></div><div class="sv">€4.820</div><div class="sd up">↑ 18%</div></div>
+        <div class="sc"><div class="sl"><span data-nl="BESTELLINGEN" data-en="ORDERS"></span></div><div class="sv">317</div><div class="sd up">↑ 42 <span data-nl="vandaag" data-en="today"></span></div></div>
+        <div class="sc"><div class="sl"><span data-nl="STOREFRONT VIEWS" data-en="STOREFRONT VIEWS"></span></div><div class="sv">2.140</div><div class="sd up">↑ 12%</div></div>
+        <div class="sc"><div class="sl"><span data-nl="CONVERSIERATIO" data-en="CONVERSION RATE"></span></div><div class="sv">6.4%</div><div class="sd dn">↓ 0.3%</div></div>
+      </div>
+      <div class="g2">
+        <div class="card"><div class="ct"><span data-nl="Omzet — 7 dagen" data-en="Revenue — 7 days"></span></div><div class="pbars" id="d-chart"></div><div style="display:flex;justify-content:space-between"><span style="font-size:9px;color:var(--muted)" data-nl="ma" data-en="mon"></span><span style="font-size:9px;color:var(--muted)" data-nl="di" data-en="tue"></span><span style="font-size:9px;color:var(--muted)" data-nl="wo" data-en="wed"></span><span style="font-size:9px;color:var(--muted)" data-nl="do" data-en="thu"></span><span style="font-size:9px;color:var(--muted)" data-nl="vr" data-en="fri"></span><span style="font-size:9px;color:var(--muted)" data-nl="za" data-en="sat"></span><span style="font-size:9px;color:var(--muted)" data-nl="zo" data-en="sun"></span></div></div>
+        <div class="card"><div class="ct"><span data-nl="Betaalmethoden" data-en="Payment methods"></span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">🇳🇱 iDEAL</span><div class="pbw"><div class="pbi" style="width:72%;background:var(--brand)"></div></div><span style="font-size:11.5px;font-weight:600;min-width:42px;text-align:right">€2.190</span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">💳 <span data-nl="Card" data-en="Card"></span></span><div class="pbw"><div class="pbi" style="width:47%;background:var(--brand-mid)"></div></div><span style="font-size:11.5px;font-weight:600;min-width:42px;text-align:right">€1.440</span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">🅿️ PayPal</span><div class="pbw"><div class="pbi" style="width:38%;background:#F0A500"></div></div><span style="font-size:11.5px;font-weight:600;min-width:42px;text-align:right">€1.190</span></div>
+        </div>
+      </div>
+      <div class="card"><div class="ct"><span data-nl="Top producten" data-en="Top products"></span></div><div class="tblw"><table><thead><tr><th><span data-nl="Product" data-en="Product"></span></th><th><span data-nl="Type" data-en="Type"></span></th><th><span data-nl="Verkopen" data-en="Sales"></span></th><th><span data-nl="Omzet" data-en="Revenue"></span></th><th><span data-nl="Status" data-en="Status"></span></th></tr></thead><tbody><tr><td><b>UI Design Masterclass</b></td><td><span class="badge badgep"><span data-nl="Cursus" data-en="Course"></span></span></td><td>89</td><td><b>€2.225</b></td><td><span class="badge badgeg">Live</span></td></tr><tr><td><b>The Freelance Blueprint</b></td><td><span class="badge badgeo">Ebook</span></td><td>134</td><td><b>€1.206</b></td><td><span class="badge badgeg">Live</span></td></tr><tr><td><b>Notion Templates Pack</b></td><td><span class="badge badgex">Template</span></td><td>212</td><td><b>€848</b></td><td><span class="badge badgeg">Live</span></td></tr></tbody></table></div></div>
+    </div>
+
+    <!-- STOREFRONT -->
+    <div class="pg2" id="dp-storefront">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Mijn storefront" data-en="My storefront"></span></div><div class="dash-ps"><span data-nl="Zo zien kopers jouw pagina" data-en="How buyers see your page"></span></div></div><div style="display:flex;gap:7px"><button class="btn bg2 bsm">✏️ <span data-nl="Bewerken" data-en="Edit"></span></button><button class="btn bp bsm" onclick="copyLink('velora.nl/amara')">🔗 <span data-nl="Deel" data-en="Share"></span></button></div></div>
+      <div class="share-bar" style="margin-bottom:12px"><div style="font-size:16px;flex-shrink:0">🏪</div><div style="flex:1;min-width:0"><div class="sb-label"><span data-nl="JOUW WINKEL — DEEL MET IEDEREEN" data-en="YOUR STORE — SHARE WITH ANYONE"></span></div><div class="sb-url">velora.nl/amara</div></div><div style="display:flex;gap:5px"><button class="sb-btn" onclick="copyLink('velora.nl/amara')">⎘</button><button class="sb-btn">📸 Instagram</button><button class="sb-btn wh">💬 <span data-nl="Deel" data-en="Share"></span></button></div></div>
+      <div style="background:linear-gradient(135deg,#0F0F0F 0%,#1A1640 100%);border-radius:10px;padding:22px;margin-bottom:12px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-30px;right:-30px;width:130px;height:130px;border-radius:50%;background:rgba(91,79,232,.15)"></div>
+        <div class="av-sm" style="width:44px;height:44px;font-size:16px;margin-bottom:8px">AK</div>
+        <div style="font-family:var(--fr);font-size:17px;font-weight:700;color:#fff;margin-bottom:4px">Amara Kofi</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.5);max-width:300px;line-height:1.5"><span data-nl="Designer & educator. Ik help ondernemers groeien met visueel sterke content." data-en="Designer & educator. I help entrepreneurs grow with visually strong content."></span></div>
+        <div style="margin-top:10px;display:flex;align-items:center;gap:7px;cursor:pointer" onclick="copyLink('velora.nl/amara')"><span style="background:rgba(91,79,232,.25);border:1px solid rgba(91,79,232,.4);color:#B8B0FF;font-family:var(--fr);font-size:12px;font-weight:700;padding:3px 11px;border-radius:20px">🔗 velora.nl/amara ⎘</span></div>
+      </div>
+      <div class="g3" style="margin-bottom:14px">
+        <div class="pc"><div class="pth" style="background:#EBF0FB">🎓</div><div class="pb2"><div class="pn">UI Design Masterclass</div><div class="pty"><span data-nl="Cursus" data-en="Course"></span></div><div style="display:flex;justify-content:space-between;align-items:center"><div class="pp">€24.99</div><span class="badge badgeg">89 sales</span></div></div></div>
+        <div class="pc"><div class="pth" style="background:#FFF0EB">📚</div><div class="pb2"><div class="pn">The Freelance Blueprint</div><div class="pty">Ebook</div><div style="display:flex;justify-content:space-between;align-items:center"><div class="pp">€8.99</div><span class="badge badgeg">134 sales</span></div></div></div>
+        <div class="pc"><div class="pth" style="background:#F0EEFF">🧩</div><div class="pb2"><div class="pn">Notion Templates Pack</div><div class="pty">Template</div><div style="display:flex;justify-content:space-between;align-items:center"><div class="pp">€3.99</div><span class="badge badgeg">212 sales</span></div></div></div>
+      </div>
+      <div class="g2">
+        <div class="card"><div class="ct"><span data-nl="Profiel bewerken" data-en="Edit profile"></span></div><label class="fl"><span data-nl="Weergavenaam" data-en="Display name"></span></label><input class="fi" value="Amara Kofi"><label class="fl">Bio</label><textarea class="fi" rows="2" style="resize:none"><span data-nl="Designer & educator. Amsterdam 🇳🇱" data-en="Designer & educator. Amsterdam 🇳🇱"></span></textarea><label class="fl"><span data-nl="Taal storefront" data-en="Storefront language"></span></label><select class="fi"><option data-nl="Nederlands" data-en="Dutch">Nederlands</option><option data-nl="Engels" data-en="English">English</option><option>NL &amp; EN</option></select><button class="btn bp" style="width:100%"><span data-nl="Opslaan" data-en="Save"></span></button></div>
+        <div class="card"><div class="ct"><span data-nl="URL & branding" data-en="URL & branding"></span></div><label class="fl">URL</label><input class="fi" value="velora.nl/amara"><label class="fl"><span data-nl="Accent kleur" data-en="Accent colour"></span></label><input type="color" value="#5B4FE8" style="width:100%;height:34px;border:1px solid var(--border);border-radius:7px;padding:2px;cursor:pointer;margin-bottom:9px"><label class="fl">Instagram</label><input class="fi" placeholder="instagram.com/..."><label class="fl">LinkedIn</label><input class="fi" placeholder="linkedin.com/..."><button class="btn bg2" style="width:100%"><span data-nl="Opslaan" data-en="Save"></span></button></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="pg2" id="dp-products">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Producten" data-en="Products"></span></div><div class="dash-ps"><span data-nl="Beheer al je digitale producten" data-en="Manage all your digital products"></span></div></div></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div class="share-bar" style="flex:1;margin-bottom:0"><div style="font-size:14px;flex-shrink:0">🔗</div><div style="flex:1;min-width:0"><div class="sb-label"><span data-nl="JOUW STOREFRONT" data-en="YOUR STOREFRONT"></span></div><div class="sb-url" style="font-size:12px">velora.nl/amara</div></div><button class="sb-btn" onclick="copyLink('velora.nl/amara')">⎘ <span data-nl="Kopieer" data-en="Copy"></span></button></div>
+        <button class="btn bp" onclick="dPage('addprod')">+ <span data-nl="Nieuw" data-en="New"></span></button>
+      </div>
+      <div style="display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap"><span class="badge badgeo" style="padding:3px 10px;cursor:pointer"><span data-nl="Alle (6)" data-en="All (6)"></span></span><span class="badge badgex" style="padding:3px 10px;cursor:pointer">Ebooks</span><span class="badge badgex" style="padding:3px 10px;cursor:pointer"><span data-nl="Cursussen" data-en="Courses"></span></span><span class="badge badgex" style="padding:3px 10px;cursor:pointer">Templates</span><span class="badge badgex" style="padding:3px 10px;cursor:pointer"><span data-nl="Lidmaatschappen" data-en="Memberships"></span></span></div>
+      <div class="tblw"><table><thead><tr><th><span data-nl="Product" data-en="Product"></span></th><th><span data-nl="Type" data-en="Type"></span></th><th><span data-nl="Prijs" data-en="Price"></span></th><th><span data-nl="Verkopen" data-en="Sales"></span></th><th><span data-nl="Status" data-en="Status"></span></th><th></th></tr></thead><tbody>
+        <tr><td>🎓 <b>UI Design Masterclass</b></td><td><span class="badge badgep"><span data-nl="Cursus" data-en="Course"></span></span></td><td>€24.99</td><td>89</td><td><span class="badge badgeg">Live</span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+        <tr><td>📚 <b>The Freelance Blueprint</b></td><td><span class="badge badgeo">Ebook</span></td><td>€8.99</td><td>134</td><td><span class="badge badgeg">Live</span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+        <tr><td>🧩 <b>Notion Templates Pack</b></td><td><span class="badge badgex">Template</span></td><td>€3.99</td><td>212</td><td><span class="badge badgeg">Live</span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+        <tr><td>💎 <b>Creator Membership</b></td><td><span class="badge badgep"><span data-nl="Lidmaatschap" data-en="Membership"></span></span></td><td>€9.99/mo</td><td>31</td><td><span class="badge badgeg">Live</span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+        <tr><td>🗓️ <b>Coaching sessie</b></td><td><span class="badge badgey">Coaching</span></td><td>€75.00</td><td>7</td><td><span class="badge badgex"><span data-nl="Concept" data-en="Draft"></span></span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+      </tbody></table></div>
+    </div>
+
+    <!-- ADD PRODUCT -->
+    <div class="pg2" id="dp-addprod">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Nieuw product" data-en="New product"></span></div><div class="dash-ps"><span data-nl="Kies het type product" data-en="Choose the product type"></span></div></div></div>
+      <div class="g3" style="margin-bottom:16px">
+        <div class="cc on"><div style="font-size:20px;margin-bottom:4px">📚</div><div style="font-size:12px;font-weight:600;color:var(--brand)"><span data-nl="Ebook / PDF" data-en="Ebook / PDF"></span></div><div style="font-size:10px;color:var(--muted)"><span data-nl="Direct download" data-en="Instant download"></span></div></div>
+        <div class="cc"><div style="font-size:20px;margin-bottom:4px">🎓</div><div style="font-size:12px;font-weight:600"><span data-nl="Online cursus" data-en="Online course"></span></div><div style="font-size:10px;color:var(--muted)"><span data-nl="Video modules" data-en="Video modules"></span></div></div>
+        <div class="cc"><div style="font-size:20px;margin-bottom:4px">💎</div><div style="font-size:12px;font-weight:600"><span data-nl="Lidmaatschap" data-en="Membership"></span></div><div style="font-size:10px;color:var(--muted)">Recurring</div></div>
+        <div class="cc"><div style="font-size:20px;margin-bottom:4px">🗓️</div><div style="font-size:12px;font-weight:600"><span data-nl="Coaching" data-en="Coaching"></span></div><div style="font-size:10px;color:var(--muted)">Booking</div></div>
+        <div class="cc"><div style="font-size:20px;margin-bottom:4px">🧩</div><div style="font-size:12px;font-weight:600">Template</div><div style="font-size:10px;color:var(--muted)"><span data-nl="Direct download" data-en="Instant download"></span></div></div>
+        <div class="cc"><div style="font-size:20px;margin-bottom:4px">📦</div><div style="font-size:12px;font-weight:600"><span data-nl="Bundel" data-en="Bundle"></span></div><div style="font-size:10px;color:var(--muted)"><span data-nl="Meerdere samen" data-en="Multiple together"></span></div></div>
+      </div>
+      <div class="g2">
+        <div class="card"><div class="ct"><span data-nl="Product details" data-en="Product details"></span></div><label class="fl"><span data-nl="Productnaam" data-en="Product name"></span></label><input class="fi" data-nl-placeholder="bijv. Social Media Gids 2025" data-en-placeholder="e.g. Social Media Guide 2025" placeholder="bijv. Social Media Gids 2025"><label class="fl"><span data-nl="Beschrijving" data-en="Description"></span></label><textarea class="fi" rows="3" style="resize:none" data-nl-placeholder="Beschrijf wat de koper krijgt..." data-en-placeholder="Describe what the buyer gets..." placeholder="Beschrijf wat de koper krijgt..."></textarea><label class="fl"><span data-nl="Upload bestand" data-en="Upload file"></span></label><div style="border:2px dashed var(--border);border-radius:8px;padding:18px;text-align:center;cursor:pointer;background:var(--surf);margin-bottom:9px" onclick="toast(lang==='nl'?'Bestandsupload in live versie':'File upload in live version')"><div style="font-size:22px;margin-bottom:4px">📁</div><div style="font-size:11.5px;color:var(--muted)"><span data-nl="Sleep bestand hierheen of klik" data-en="Drag file here or click"></span></div></div><label class="fl"><span data-nl="Categorie" data-en="Category"></span></label><select class="fi"><option>📈 Marketing</option><option>🎨 Design</option><option>💰 Finance</option><option>💻 Tech</option></select></div>
+        <div class="card"><div class="ct"><span data-nl="Prijs & instellingen" data-en="Pricing & settings"></span></div><label class="fl"><span data-nl="Prijstype" data-en="Pricing type"></span></label><select class="fi"><option data-nl="Eenmalig" data-en="One-time">Eenmalig</option><option data-nl="Recurring (per maand)" data-en="Recurring (monthly)">Recurring</option><option data-nl="Betaal wat je wil" data-en="Pay what you want">Betaal wat je wil</option></select><label class="fl"><span data-nl="Prijs (EUR)" data-en="Price (EUR)"></span></label><input class="fi" type="number" value="9.99" step="0.01"><div style="font-size:10.5px;color:var(--muted);margin-bottom:10px"><span data-nl="BTW wordt automatisch berekend" data-en="VAT is calculated automatically"></span></div><label class="fl"><span data-nl="Zichtbaarheid" data-en="Visibility"></span></label><select class="fi"><option data-nl="Publiek" data-en="Public">Publiek</option><option data-nl="Privé" data-en="Private">Privé</option><option data-nl="Wachtwoordbeveiligd" data-en="Password protected">Wachtwoordbeveiligd</option></select>
+          <div class="trow"><div><div class="ti"><span data-nl="Affiliate commissie" data-en="Affiliate commission"></span></div><div class="ts2"><span data-nl="Laat anderen promoten" data-en="Let others promote"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="trow"><div><div class="ti"><span data-nl="Auto BTW-factuur" data-en="Auto VAT invoice"></span></div><div class="ts2"><span data-nl="Naar elke koper" data-en="To every buyer"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="trow"><div><div class="ti"><span data-nl="Upsell tonen" data-en="Show upsell"></span></div><div class="ts2"><span data-nl="Na aankoop" data-en="After purchase"></span></div></div><div class="tgl" onclick="this.classList.toggle('on')"></div></div>
+          <button class="btn bp" style="width:100%;padding:10px;margin-top:11px">🚀 <span data-nl="Publiceer product" data-en="Publish product"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFFILIATES -->
+    <div class="pg2" id="dp-affiliates">
+      <div class="dash-ph"><div><div class="dash-pt">Affiliates</div><div class="dash-ps"><span data-nl="Laat anderen jouw producten promoten" data-en="Let others promote your products"></span></div></div><button class="btn bg2 bsm">⚙️ <span data-nl="Instellingen" data-en="Settings"></span></button></div>
+      <div class="sg2">
+        <div class="sc"><div class="sl">AFFILIATES</div><div class="sv">28</div><div class="sd up">↑ 5</div></div>
+        <div class="sc"><div class="sl"><span data-nl="OMZET VIA AFF." data-en="REVENUE VIA AFF."></span></div><div class="sv">€640</div><div class="sd up">↑ 22%</div></div>
+        <div class="sc"><div class="sl"><span data-nl="GEM. COMMISSIE" data-en="AVG. COMMISSION"></span></div><div class="sv">20%</div><div class="sd"><span data-nl="per verkoop" data-en="per sale"></span></div></div>
+        <div class="sc"><div class="sl"><span data-nl="OPENSTAAND" data-en="PENDING"></span></div><div class="sv">€128</div><div class="sd dn">4</div></div>
+      </div>
+      <div class="share-bar" style="margin-bottom:13px"><div style="font-size:16px;flex-shrink:0">🔗</div><div style="flex:1;min-width:0"><div class="sb-label"><span data-nl="AFFILIATE AANMELDLINK" data-en="AFFILIATE SIGNUP LINK"></span></div><div class="sb-url">velora.nl/ref/amara</div></div><div style="display:flex;gap:5px"><button class="sb-btn" onclick="copyLink('velora.nl/ref/amara')">⎘ <span data-nl="Kopieer" data-en="Copy"></span></button><button class="sb-btn wh">💬 <span data-nl="Deel" data-en="Share"></span></button></div></div>
+      <div class="card"><div class="ct"><span data-nl="Top affiliates" data-en="Top affiliates"></span></div><div class="tblw"><table><thead><tr><th><span data-nl="Naam" data-en="Name"></span></th><th><span data-nl="Land" data-en="Country"></span></th><th>Referrals</th><th><span data-nl="Omzet" data-en="Revenue"></span></th><th><span data-nl="Commissie" data-en="Commission"></span></th><th><span data-nl="Status" data-en="Status"></span></th></tr></thead><tbody>
+        <tr><td><b>James Osei</b></td><td>🇳🇬 Nigeria</td><td>34</td><td>€680</td><td><b>€136</b></td><td><span class="badge badgeo"><span data-nl="Uitbetalen" data-en="Pay out"></span></span></td></tr>
+        <tr><td><b>Lisa Smit</b></td><td>🇳🇱 NL</td><td>21</td><td>€420</td><td><b>€84</b></td><td><span class="badge badgeg"><span data-nl="Uitbetaald" data-en="Paid"></span></span></td></tr>
+        <tr><td><b>Mariam Bah</b></td><td>🇸🇳 SN</td><td>18</td><td>€360</td><td><b>€72</b></td><td><span class="badge badgeg"><span data-nl="Uitbetaald" data-en="Paid"></span></span></td></tr>
+      </tbody></table></div></div>
+    </div>
+
+    <!-- DISCOUNTS -->
+    <div class="pg2" id="dp-discounts">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Kortingscodes" data-en="Discount codes"></span></div><div class="dash-ps"><span data-nl="Maak promoties" data-en="Create promotions"></span></div></div><button class="btn bp bsm">+ <span data-nl="Nieuwe code" data-en="New code"></span></button></div>
+      <div class="card"><div class="tblw"><table><thead><tr><th><span data-nl="Code" data-en="Code"></span></th><th><span data-nl="Korting" data-en="Discount"></span></th><th><span data-nl="Gebruikt" data-en="Used"></span></th><th><span data-nl="Geldig tot" data-en="Valid until"></span></th><th><span data-nl="Status" data-en="Status"></span></th><th></th></tr></thead><tbody>
+        <tr><td><code style="background:var(--surf);padding:2px 7px;border-radius:4px;font-size:11px">WELKOM20</code></td><td>20%</td><td>47×</td><td>31 dec 2025</td><td><span class="badge badgeg"><span data-nl="Actief" data-en="Active"></span></span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+        <tr><td><code style="background:var(--surf);padding:2px 7px;border-radius:4px;font-size:11px">ZOMER10</code></td><td>€10</td><td>23×</td><td>1 sep 2025</td><td><span class="badge badgex"><span data-nl="Verlopen" data-en="Expired"></span></span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+        <tr><td><code style="background:var(--surf);padding:2px 7px;border-radius:4px;font-size:11px">VRIEND50</code></td><td>50%</td><td>8×</td><td><span data-nl="Geen limiet" data-en="No limit"></span></td><td><span class="badge badgeg"><span data-nl="Actief" data-en="Active"></span></span></td><td><button class="btn bg2 bsm"><span data-nl="Bewerk" data-en="Edit"></span></button></td></tr>
+      </tbody></table></div></div>
+    </div>
+
+    <!-- PAYOUTS -->
+    <div class="pg2" id="dp-payouts">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Uitbetalingen" data-en="Payouts"></span></div><div class="dash-ps"><span data-nl="Betaalmethoden & uitbetalingen" data-en="Payment methods & payouts"></span></div></div></div>
+      <div class="g2">
+        <div><div class="card" style="margin-bottom:12px"><div class="ct"><span data-nl="Betaalmethoden voor kopers" data-en="Payment methods for buyers"></span></div>
+          <div class="pyrow"><div class="pylogo" style="background:#00A3E0;font-size:7px">iDEAL</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">iDEAL</div><div style="font-size:11px;color:var(--muted)"><span data-nl="Standaard NL" data-en="Default NL"></span></div></div><span class="badge badgeg">✓ <span data-nl="Actief" data-en="Active"></span></span></div>
+          <div class="pyrow"><div class="pylogo" style="background:#003087">PP</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">PayPal</div><div style="font-size:11px;color:var(--muted)"><span data-nl="Wereldwijd" data-en="Worldwide"></span></div></div><span class="badge badgeg">✓ <span data-nl="Actief" data-en="Active"></span></span></div>
+          <div class="pyrow"><div class="pylogo" style="background:#635BFF">S</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600">Stripe</div><div style="font-size:11px;color:var(--muted)">Visa, Mastercard</div></div><span class="badge badgeg">✓ <span data-nl="Actief" data-en="Active"></span></span></div>
+          <div style="background:#EEF0FF;border-radius:8px;padding:10px 12px;margin-top:4px;font-size:11px;color:var(--brand)"><b><span data-nl="Automatische BTW:" data-en="Automatic VAT:"></span></b> <span data-nl="21% NL/EU · 0% buiten EU" data-en="21% NL/EU · 0% outside EU"></span></div>
+        </div></div>
+        <div class="card"><div class="ct"><span data-nl="Uitbetaling aan jou" data-en="Payout to you"></span></div><label class="fl">IBAN</label><input class="fi" value="NL29 ABNA 0473 1435 40"><label class="fl"><span data-nl="Frequentie" data-en="Frequency"></span></label><select class="fi"><option data-nl="Wekelijks" data-en="Weekly">Wekelijks</option><option data-nl="Maandelijks" data-en="Monthly">Maandelijks</option></select>
+          <div style="background:var(--surf);border-radius:8px;padding:11px;display:flex;justify-content:space-between;align-items:center;margin-bottom:11px"><div><div style="font-size:11px;color:var(--muted)"><span data-nl="Beschikbaar saldo" data-en="Available balance"></span></div><div style="font-family:var(--fr);font-size:21px;font-weight:700">€840.00</div></div><button class="btn bp bsm"><span data-nl="Uitbetalen" data-en="Pay out"></span></button></div>
+          <table><thead><tr><th><span data-nl="Datum" data-en="Date"></span></th><th><span data-nl="Bedrag" data-en="Amount"></span></th><th><span data-nl="Status" data-en="Status"></span></th><th></th></tr></thead><tbody><tr><td>1 mrt</td><td><b>€1.240</b></td><td><span class="badge badgeg"><span data-nl="Ontvangen" data-en="Received"></span></span></td><td><button class="btn bg2 bsm">PDF</button></td></tr><tr><td>1 feb</td><td><b>€980</b></td><td><span class="badge badgeg"><span data-nl="Ontvangen" data-en="Received"></span></span></td><td><button class="btn bg2 bsm">PDF</button></td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="pg2" id="dp-analytics">
+      <div class="dash-ph"><div><div class="dash-pt">Analytics</div><div class="dash-ps"><span data-nl="Inzicht in bezoeken & omzet" data-en="Insights into visits & revenue"></span></div></div><button class="btn bg2 bsm">📥 <span data-nl="Exporteer" data-en="Export"></span></button></div>
+      <div class="sg2">
+        <div class="sc"><div class="sl"><span data-nl="STOREFRONT VIEWS" data-en="STOREFRONT VIEWS"></span></div><div class="sv">2.140</div><div class="sd up">↑ 12%</div></div>
+        <div class="sc"><div class="sl"><span data-nl="PRODUCT VIEWS" data-en="PRODUCT VIEWS"></span></div><div class="sv">8.720</div><div class="sd up">↑ 8%</div></div>
+        <div class="sc"><div class="sl"><span data-nl="CONVERSIE" data-en="CONVERSION"></span></div><div class="sv">6.4%</div><div class="sd dn">↓ 0.3%</div></div>
+        <div class="sc"><div class="sl"><span data-nl="SUBSCRIBERS" data-en="SUBSCRIBERS"></span></div><div class="sv">412</div><div class="sd up">↑ 34</div></div>
+      </div>
+      <div class="g2">
+        <div class="card"><div class="ct"><span data-nl="Verkopen — 30 dagen" data-en="Sales — 30 days"></span></div><div class="pbars" id="a-chart"></div></div>
+        <div class="card"><div class="ct"><span data-nl="Bezoekers per land" data-en="Visitors by country"></span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">🇳🇱 <span data-nl="Nederland" data-en="Netherlands"></span></span><div class="pbw"><div class="pbi" style="width:68%;background:var(--brand)"></div></div><span style="font-size:11px;font-weight:600;min-width:30px;text-align:right">68%</span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">🇳🇬 Nigeria</span><div class="pbw"><div class="pbi" style="width:14%;background:var(--brand-mid)"></div></div><span style="font-size:11px;font-weight:600;min-width:30px;text-align:right">14%</span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">🇩🇪 <span data-nl="Duitsland" data-en="Germany"></span></span><div class="pbw"><div class="pbi" style="width:9%;background:#F0A500"></div></div><span style="font-size:11px;font-weight:600;min-width:30px;text-align:right">9%</span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">🇧🇪 <span data-nl="België" data-en="Belgium"></span></span><div class="pbw"><div class="pbi" style="width:5%;background:var(--green)"></div></div><span style="font-size:11px;font-weight:600;min-width:30px;text-align:right">5%</span></div>
+          <div class="prow"><span style="font-size:12px;min-width:90px">🌍 <span data-nl="Overig" data-en="Other"></span></span><div class="pbw"><div class="pbi" style="width:4%;background:var(--muted)"></div></div><span style="font-size:11px;font-weight:600;min-width:30px;text-align:right">4%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="pg2" id="dp-notifs">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Notificaties" data-en="Notifications"></span></div><div class="dash-ps"><span data-nl="Meldingen & e-mailinstellingen" data-en="Alerts & email settings"></span></div></div></div>
+      <div class="g2">
+        <div class="card"><div class="ct"><span data-nl="Recent" data-en="Recent"></span></div>
+          <div class="notif"><div class="ni2" style="background:var(--green-lt)">💰</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:1px"><span data-nl="Nieuwe verkoop!" data-en="New sale!"></span></div><div style="font-size:11.5px;color:var(--muted)">Lisa Smit · UI Design Masterclass · €24.99</div><div style="font-size:10px;color:var(--muted);margin-top:2px"><span data-nl="2 minuten geleden" data-en="2 minutes ago"></span></div></div><div class="ndot"></div></div>
+          <div class="notif"><div class="ni2" style="background:var(--brand-lt)">🔗</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:1px"><span data-nl="Nieuwe affiliate" data-en="New affiliate"></span></div><div style="font-size:11.5px;color:var(--muted)">Kevin de Vries</div><div style="font-size:10px;color:var(--muted);margin-top:2px"><span data-nl="1 uur geleden" data-en="1 hour ago"></span></div></div><div class="ndot"></div></div>
+          <div class="notif"><div class="ni2" style="background:#EEF0FF">💸</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:1px"><span data-nl="Uitbetaling verwerkt" data-en="Payout processed"></span></div><div style="font-size:11.5px;color:var(--muted)">€1.240 → NL29 ABNA</div><div style="font-size:10px;color:var(--muted);margin-top:2px">1 mrt 2025</div></div><div class="ndot"></div></div>
+          <div class="notif"><div class="ni2" style="background:var(--surf)">📊</div><div style="flex:1"><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:1px"><span data-nl="Wekelijkse samenvatting" data-en="Weekly summary"></span></div><div style="font-size:11.5px;color:var(--muted)"><span data-nl="42 verkopen · €860 omzet vorige week" data-en="42 sales · €860 revenue last week"></span></div></div></div>
+        </div>
+        <div class="card"><div class="ct"><span data-nl="E-mail instellingen" data-en="Email settings"></span></div>
+          <div class="trow"><div><div class="ti"><span data-nl="Verkoop bevestiging" data-en="Sale confirmation"></span></div><div class="ts2"><span data-nl="Direct bij elke verkoop" data-en="Instantly for every sale"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="trow"><div><div class="ti"><span data-nl="Wekelijkse samenvatting" data-en="Weekly summary"></span></div><div class="ts2"><span data-nl="Elke maandag 09:00" data-en="Every Monday 09:00"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="trow"><div><div class="ti"><span data-nl="Uitbetaling" data-en="Payout confirmation"></span></div><div class="ts2"><span data-nl="Bij elke uitbetaling" data-en="For every payout"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="trow"><div><div class="ti"><span data-nl="Affiliate activiteit" data-en="Affiliate activity"></span></div><div class="ts2"><span data-nl="Nieuwe referrals" data-en="New referrals"></span></div></div><div class="tgl" onclick="this.classList.toggle('on')"></div></div>
+          <div class="trow"><div><div class="ti"><span data-nl="Platform updates" data-en="Platform updates"></span></div><div class="ts2"><span data-nl="Nieuwe functies" data-en="New features"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLORE (in dashboard) -->
+    <div class="pg2" id="dp-explore">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Ontdek producten" data-en="Discover products"></span></div><div class="dash-ps"><span data-nl="Van creators wereldwijd" data-en="From creators worldwide"></span></div></div></div>
+      <input class="fi" style="font-size:13px;padding:10px 14px;margin-bottom:14px" data-nl-placeholder="🔍 Zoek op product, creator of categorie..." data-en-placeholder="🔍 Search by product, creator or category..." placeholder="🔍 Zoek op product, creator of categorie...">
+      <div style="font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:8px">🔥 <span data-nl="Trending nu" data-en="Trending now"></span></div>
+      <div class="g4" style="margin-bottom:16px">
+        <div class="ec2"><div class="eth" style="background:#EBF0FB">🎓</div><div style="padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Amara Kofi</div><div class="en2">UI Design Masterclass</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€24.99</span><span class="badge badgeo">🔥</span></div></div></div>
+        <div class="ec2"><div class="eth" style="background:#FFF8E8">📈</div><div style="padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Tom Bakker</div><div class="en2"><span data-nl="Instagram Groeiplan" data-en="Instagram Growth Plan"></span></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€12.99</span><span class="badge badgeg">⭐</span></div></div></div>
+        <div class="ec2"><div class="eth" style="background:#F0FFF4">💰</div><div style="padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Sarah Jansen</div><div class="en2"><span data-nl="Beleggen voor beginners" data-en="Investing for beginners"></span></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€19.99</span><span class="badge badgep"><span data-nl="Nieuw" data-en="New"></span></span></div></div></div>
+        <div class="ec2"><div class="eth" style="background:#FFF0EB">🧩</div><div style="padding:8px 10px"><div style="font-size:10px;color:var(--muted)">Amara Kofi</div><div class="en2">Notion Templates</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€3.99</span><span class="badge badgeg">⭐</span></div></div></div>
+      </div>
+    </div>
+
+    <!-- CHECKOUT (in dashboard) -->
+    <div class="pg2" id="dp-checkout">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Afrekenen" data-en="Checkout"></span></div><div class="dash-ps"><span data-nl="Veilig betalen" data-en="Secure payment"></span></div></div></div>
+      <div class="co-wrap">
+        <div>
+          <div class="card" style="margin-bottom:11px"><div class="ct"><span data-nl="Jouw gegevens" data-en="Your details"></span></div><div class="fr2"><div class="fg"><label class="fl"><span data-nl="Voornaam" data-en="First name"></span></label><input class="fi" style="margin-bottom:0" placeholder="Jana"></div><div class="fg"><label class="fl"><span data-nl="Achternaam" data-en="Last name"></span></label><input class="fi" style="margin-bottom:0" placeholder="de Vries"></div></div><label class="fl" style="margin-top:9px"><span data-nl="E-mail" data-en="Email"></span></label><input class="fi" placeholder="jana@email.nl"><label class="fl"><span data-nl="Land" data-en="Country"></span></label><select class="fi" style="margin-bottom:0;cursor:pointer"><option>🇳🇱 Nederland</option><option>🇧🇪 België</option><option>🇳🇬 Nigeria</option><option>🌍 Other</option></select></div>
+          <div class="card"><div class="ct"><span data-nl="Betaalmethode" data-en="Payment method"></span></div>
+            <div class="pm on" onclick="selPay(this)"><div style="font-size:7.5px;font-weight:700;background:#00A3E0;color:#fff;padding:2px 5px;border-radius:3px;min-width:32px;text-align:center">iDEAL</div><div><div style="font-size:12.5px;font-weight:600">iDEAL</div><div style="font-size:11px;color:var(--muted)"><span data-nl="Via jouw bank" data-en="Via your bank"></span></div></div></div>
+            <div class="pm" onclick="selPay(this)"><span style="font-size:16px">💳</span><div><div style="font-size:12.5px;font-weight:600"><span data-nl="Creditcard" data-en="Credit card"></span></div><div style="font-size:11px;color:var(--muted)">Visa, Mastercard</div></div></div>
+            <div class="pm" onclick="selPay(this)"><div style="width:28px;height:18px;background:#003087;border-radius:3px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:7.5px;font-weight:700">PP</div><div><div style="font-size:12.5px;font-weight:600">PayPal</div></div></div>
+            <button class="btn bp bfull" style="margin-top:11px;padding:11px;font-size:13.5px" onclick="go('s-buyer-success')">🔒 <span data-nl="Betaal €30.24" data-en="Pay €30.24"></span></button>
+            <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:7px"><span data-nl="Direct product + BTW-factuur per e-mail" data-en="Instant product + VAT invoice by email"></span></div>
+          </div>
+        </div>
+        <div class="order-sum">
+          <div style="font-size:10px;font-weight:700;color:var(--ink);margin-bottom:9px;letter-spacing:.4px"><span data-nl="JOUW BESTELLING" data-en="YOUR ORDER"></span></div>
+          <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:9px"><div style="height:66px;background:#EBF0FB;display:flex;align-items:center;justify-content:center;font-size:26px">🎓</div><div style="padding:9px 11px"><div style="font-size:12.5px;font-weight:600">UI Design Masterclass</div><div style="font-size:11px;color:var(--muted)">Amara Kofi</div><div style="font-size:11px;color:var(--green);margin-top:3px">✓ <span data-nl="Direct beschikbaar" data-en="Instant access"></span></div></div></div>
+          <div style="background:var(--green-lt);border-radius:7px;padding:8px;margin-bottom:9px"><div style="font-size:10.5px;font-weight:600;color:var(--green);margin-bottom:1px"><span data-nl="Upsell 🎁" data-en="Offer 🎁"></span></div><div style="font-size:10.5px;color:var(--green)"><span data-nl="Notion Pack voor €2.99 extra" data-en="Notion Pack for €2.99 extra"></span></div></div>
+          <div style="font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:3px"><span data-nl="Subtotaal" data-en="Subtotal"></span><span>€24.99</span></div>
+          <div style="font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:7px"><span data-nl="BTW (21%)" data-en="VAT (21%)"></span><span>€5.25</span></div>
+          <div style="font-size:13.5px;font-weight:700;display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:7px"><span data-nl="Totaal" data-en="Total"></span><span style="font-family:var(--fr)">€30.24</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUYER ACCOUNT (in dashboard) -->
+    <div class="pg2" id="dp-buyer">
+      <div class="dash-ph"><div><div class="dash-pt"><span data-nl="Mijn aankopen" data-en="My purchases"></span></div><div class="dash-ps"><span data-nl="Al je gekochte producten op één plek" data-en="All your purchased products in one place"></span></div></div></div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:13px">
+        <div class="sc"><div class="sl"><span data-nl="AANKOPEN" data-en="PURCHASES"></span></div><div class="sv">7</div></div>
+        <div class="sc"><div class="sl"><span data-nl="UITGEGEVEN" data-en="TOTAL SPENT"></span></div><div class="sv">€124</div></div>
+        <div class="sc"><div class="sl"><span data-nl="FACTUREN" data-en="INVOICES"></span></div><div class="sv">7</div><div class="sd" style="color:var(--brand);cursor:pointer"><span data-nl="Download alles" data-en="Download all"></span></div></div>
+      </div>
+      <div class="card" style="margin-bottom:12px"><div class="ct"><span data-nl="Mijn producten" data-en="My products"></span></div><div class="tblw"><table><thead><tr><th><span data-nl="Product" data-en="Product"></span></th><th><span data-nl="Creator" data-en="Creator"></span></th><th><span data-nl="Datum" data-en="Date"></span></th><th><span data-nl="Bedrag" data-en="Amount"></span></th><th><span data-nl="Download" data-en="Download"></span></th><th><span data-nl="Factuur" data-en="Invoice"></span></th></tr></thead><tbody>
+        <tr><td>🎓 <b>UI Design Masterclass</b></td><td>Amara Kofi</td><td>15 mrt</td><td>€30.24</td><td><button class="btn bp bsm">⬇ <span data-nl="Download" data-en="Download"></span></button></td><td><button class="btn bg2 bsm">PDF</button></td></tr>
+        <tr><td>📚 <b>Freelance Blueprint</b></td><td>Amara Kofi</td><td>2 feb</td><td>€10.77</td><td><button class="btn bp bsm">⬇ <span data-nl="Download" data-en="Download"></span></button></td><td><button class="btn bg2 bsm">PDF</button></td></tr>
+        <tr><td>📈 <b>Instagram Groeiplan</b></td><td>Tom Bakker</td><td>10 jan</td><td>€15.70</td><td><button class="btn bp bsm">⬇ <span data-nl="Download" data-en="Download"></span></button></td><td><button class="btn bg2 bsm">PDF</button></td></tr>
+      </tbody></table></div></div>
+      <div class="card"><div class="ct"><span data-nl="Terugbetaling aanvragen" data-en="Request a refund"></span></div><div style="font-size:12.5px;color:var(--muted);margin-bottom:10px"><span data-nl="Niet tevreden? Vraag binnen 14 dagen een terugbetaling aan." data-en="Not satisfied? Request a refund within 14 days."></span></div><label class="fl"><span data-nl="Selecteer product" data-en="Select product"></span></label><select class="fi"><option data-nl="Selecteer..." data-en="Select...">Selecteer...</option><option>UI Design Masterclass</option><option>Freelance Blueprint</option></select><label class="fl"><span data-nl="Reden" data-en="Reason"></span></label><textarea class="fi" rows="2" style="resize:none" data-nl-placeholder="Vertel ons waarom..." data-en-placeholder="Tell us why..." placeholder="Vertel ons waarom..."></textarea><button class="btn bg2"><span data-nl="Aanvragen" data-en="Submit request"></span></button></div>
+    </div>
+
+  </div><!-- /dash-main -->
+</div><!-- /dash-app -->
+</div><!-- /s-dash -->
+
+<script>
+let lang='nl';
+let csCurrentStep=1;
+
+/* ── NAVIGATION ── */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  const el=document.getElementById(id);
+  if(el){el.classList.add('on');el.scrollTop=0;}
+}
+
+/* ── LANGUAGE ── */
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lb').forEach(b=>{
+    if(b.textContent.includes('NL'))b.classList.toggle('on',l==='nl');
+    if(b.textContent.includes('EN'))b.classList.toggle('on',l==='en');
+  });
+  document.querySelectorAll('[data-nl]').forEach(el=>{
+    const v=el.getAttribute('data-'+l);
+    if(v!==null)el.innerHTML=v;
+  });
+  document.querySelectorAll('[data-nl-placeholder]').forEach(el=>{
+    const v=el.getAttribute('data-'+l+'-placeholder');
+    if(v)el.placeholder=v;
+  });
+  document.querySelectorAll('select option[data-nl]').forEach(opt=>{
+    const v=opt.getAttribute('data-'+l);
+    if(v!==null)opt.textContent=v;
+  });
+}
+
+/* ── DASHBOARD SECTIONS ── */
+const dashSections=['creator','explore','checkout','buyer'];
+function setDashSection(s){
+  dashSections.forEach(x=>{
+    const sb=document.getElementById('dsb-'+x);
+    if(sb)sb.style.display=x===s?'flex':'none';
+    const tt=document.getElementById('dt-'+x);
+    if(tt)tt.classList.toggle('on',x===s);
+  });
+  const map={creator:'dashboard',explore:'explore',checkout:'checkout',buyer:'buyer'};
+  dPage(map[s]);
+}
+
+/* ── DASHBOARD PAGES ── */
+const dPages=['dashboard','storefront','products','addprod','affiliates','discounts','payouts','analytics','notifs','explore','checkout','buyer'];
+function dPage(id){
+  dPages.forEach(p=>{
+    const el=document.getElementById('dp-'+p);
+    if(el)el.className=p===id?'pg2 on':'pg2';
+    const si=document.getElementById('dsi-'+p);
+    if(si)si.classList.toggle('on',p===id);
+  });
+  // ensure right sidebar is showing
+  if(['explore'].includes(id)){document.getElementById('dsb-explore').style.display='flex';document.getElementById('dsb-creator').style.display='none';['checkout','buyer'].forEach(x=>{const e=document.getElementById('dsb-'+x);if(e)e.style.display='none'});}
+  else if(['checkout'].includes(id)){document.getElementById('dsb-checkout').style.display='flex';document.getElementById('dsb-creator').style.display='none';['explore','buyer'].forEach(x=>{const e=document.getElementById('dsb-'+x);if(e)e.style.display='none'});}
+  else if(['buyer'].includes(id)){document.getElementById('dsb-buyer').style.display='flex';document.getElementById('dsb-creator').style.display='none';['explore','checkout'].forEach(x=>{const e=document.getElementById('dsb-'+x);if(e)e.style.display='none'});}
+  else{document.getElementById('dsb-creator').style.display='flex';['explore','checkout','buyer'].forEach(x=>{const e=document.getElementById('dsb-'+x);if(e)e.style.display='none'});}
+  document.getElementById('dash-main-area').scrollTop=0;
+}
+
+/* ── CREATOR SIGNUP STEPPER ── */
+function csStep(n){
+  if(n===2&&csCurrentStep===1){
+    const e=document.getElementById('c-email');
+    if(e&&!e.value){toast(lang==='nl'?'Vul je e-mail in':'Please enter your email');return;}
+  }
+  csCurrentStep=n;
+  [1,2,3].forEach(i=>{
+    document.getElementById('cp'+i).classList.toggle('on',i===n);
+    const c=document.getElementById('sp'+i);
+    if(i<n){c.classList.add('dn');c.textContent='✓';c.classList.remove('on');}
+    else if(i===n){c.classList.add('on');c.classList.remove('dn');c.textContent=i;}
+    else{c.classList.remove('on','dn');c.textContent=i;}
+    if(i<3){const l=document.getElementById('sl'+i);if(l)l.classList.toggle('dn',i<n);}
+  });
+  const titles={nl:['Account aanmaken','Jouw storefront','Uitbetaling instellen'],en:['Create account','Your storefront','Set up payouts']};
+  const subs={nl:['Stap 1 van 3','Stap 2 van 3','Stap 3 van 3'],en:['Step 1 of 3','Step 2 of 3','Step 3 of 3']};
+  const tt=document.getElementById('cst-title');const ts=document.getElementById('cst-sub');
+  if(tt)tt.innerHTML=titles[lang][n-1];if(ts)ts.innerHTML=subs[lang][n-1];
+}
+
+/* ── SLUG CHECK ── */
+function chkSlug(v){
+  const clean=v.toLowerCase().replace(/[^a-z0-9-]/g,'');
+  const el=document.getElementById('c-slug');if(el&&v!==clean)el.value=clean;
+  const hint=document.getElementById('slug-hint');const wrap=document.getElementById('slug-wrap');
+  if(!hint||!wrap)return;
+  if(clean.length>2){hint.innerHTML='✓ <span style="color:var(--green)">velora.nl/'+clean+'</span> '+(lang==='nl'?'is beschikbaar':'is available');wrap.style.borderColor='var(--green)';}
+  else{hint.innerHTML=lang==='nl'?'Minimaal 3 tekens':'Minimum 3 characters';wrap.style.borderColor='var(--border)';}
+}
+
+/* ── PASSWORD STRENGTH ── */
+function pwStr(v,pfx){
+  let s=0;
+  if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  const cls=['','w','f','s','s'];
+  [1,2,3,4].forEach(i=>{const b=document.getElementById(pfx+i);if(b)b.className='pw-bar '+(i<=s?cls[s]:'');});
+}
+
+/* ── PAY METHOD SELECT ── */
+function selPay(el){
+  const parent=el.parentElement;
+  parent.querySelectorAll('.pm').forEach(m=>m.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ── COPY LINK ── */
+function copyLink(url){
+  const full='https://'+url;
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(full).then(()=>toast(lang==='nl'?'✓ Link gekopieerd!':'✓ Link copied!'));}
+  else{const t=document.createElement('textarea');t.value=full;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);toast(lang==='nl'?'✓ Link gekopieerd!':'✓ Link copied!');}
+}
+
+/* ── TOAST ── */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),2200);
+}
+
+/* ── CHARTS ── */
+function mkChart(id,vals,color){
+  const el=document.getElementById(id);if(!el)return;
+  const mx=Math.max(...vals);
+  vals.forEach(v=>{const d=document.createElement('div');d.className='pbar-b';d.style.cssText='flex:1;height:'+Math.round(v/mx*48)+'px;background:'+color+';border-radius:2px 2px 0 0';el.appendChild(d);});
+}
+mkChart('d-chart',[32,48,41,62,74,51,84],'#5B4FE8');
+mkChart('a-chart',[14,20,18,22,31,28,36,29,40,38,42,39,45,41,48,39,42,50,46,52,49,54,51,48,56,53,58,62,59,64],'#7C6FF5');
+
+/* ── INIT ── */
+document.getElementById('dsb-creator').style.display='flex';
+['explore','checkout','buyer'].forEach(x=>{const e=document.getElementById('dsb-'+x);if(e)e.style.display='none';});
+</script>
+</body>
+</html>
