@@ -536,7 +536,7 @@ tr:hover td{background:var(--surf)}
             <div class="fhint" id="slug-hint"><span data-nl="Kies een naam — dit wordt jouw link" data-en="Choose a name — this becomes your link"></span></div>
           </div>
           <div class="fg"><label class="fl">Bio</label><textarea class="fi" rows="2" style="resize:none" id="c-bio" placeholder="Designer & educator..."></textarea></div>
-          <div class="fg"><label class="fl"><span data-nl="Categorie" data-en="Category"></span></label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px"><div class="chip on" onclick="this.classList.toggle('on')">📈 Marketing</div><div class="chip" onclick="this.classList.toggle('on')">🎨 Design</div><div class="chip" onclick="this.classList.toggle('on')">💰 Finance</div><div class="chip" onclick="this.classList.toggle('on')">💻 Tech</div><div class="chip" onclick="this.classList.toggle('on')">📸 Photo</div><div class="chip" onclick="this.classList.toggle('on')">🧘 Lifestyle</div></div></div>
+          <div class="fg"><label class="fl"><span data-nl="Categorie" data-en="Category"></span></label><select class="fi" style="cursor:pointer"><option>📈 Marketing</option><option>🎨 Design</option><option>💰 Finance</option><option>💻 Tech &amp; Code</option><option>📸 Photography</option><option>🧘 Lifestyle</option><option>📝 Writing</option><option>🎵 Music &amp; Audio</option></select></div>
           <div style="display:flex;gap:9px"><button class="btn bg2" style="flex:1;padding:10px" onclick="csStep(1)">←</button><button class="btn bp" style="flex:2;padding:10px" onclick="csStep(3)"><span data-nl="Volgende →" data-en="Next →"></span></button></div>
         </div>
         <!-- STEP 3 -->
@@ -695,17 +695,18 @@ tr:hover td{background:var(--surf)}
   </nav>
   <div style="padding:22px 28px">
     <input class="fi" style="font-size:13px;padding:10px 14px;margin-bottom:16px" placeholder="🔍 Zoek op product, creator of categorie...">
-    <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:9px"><span data-nl="Categorieën" data-en="Categories"></span></div>
-    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:18px">
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">📈</div><div style="font-size:12px;font-weight:600">Marketing</div><div style="font-size:10px;color:var(--muted)">142 <span data-nl="producten" data-en="products"></span></div></div>
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">🎨</div><div style="font-size:12px;font-weight:600">Design</div><div style="font-size:10px;color:var(--muted)">98 <span data-nl="producten" data-en="products"></span></div></div>
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">💰</div><div style="font-size:12px;font-weight:600">Finance</div><div style="font-size:10px;color:var(--muted)">74 <span data-nl="producten" data-en="products"></span></div></div>
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">💻</div><div style="font-size:12px;font-weight:600">Tech & Code</div><div style="font-size:10px;color:var(--muted)">89 <span data-nl="producten" data-en="products"></span></div></div>
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">📸</div><div style="font-size:12px;font-weight:600">Photography</div><div style="font-size:10px;color:var(--muted)">61 <span data-nl="producten" data-en="products"></span></div></div>
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">🧘</div><div style="font-size:12px;font-weight:600">Lifestyle</div><div style="font-size:10px;color:var(--muted)">53 <span data-nl="producten" data-en="products"></span></div></div>
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">📝</div><div style="font-size:12px;font-weight:600">Writing</div><div style="font-size:10px;color:var(--muted)">44 <span data-nl="producten" data-en="products"></span></div></div>
-      <div class="cc"><div style="font-size:20px;margin-bottom:4px">🎵</div><div style="font-size:12px;font-weight:600">Music</div><div style="font-size:10px;color:var(--muted)">37 <span data-nl="producten" data-en="products"></span></div></div>
-    </div>
+    <label class="fl" style="margin-bottom:6px"><span data-nl="Categorieën" data-en="Categories"></span></label>
+    <select class="fi" style="margin-bottom:18px;cursor:pointer" onchange="filterByCategory(this.value)">
+      <option value="">🔍 <span data-nl="Alle categorieën" data-en="All categories"></span></option>
+      <option value="marketing">📈 Marketing (142)</option>
+      <option value="design">🎨 Design (98)</option>
+      <option value="finance">💰 Finance (74)</option>
+      <option value="tech">💻 Tech &amp; Code (89)</option>
+      <option value="photography">📸 Photography (61)</option>
+      <option value="lifestyle">🧘 Lifestyle (53)</option>
+      <option value="writing">📝 Writing (44)</option>
+      <option value="music">🎵 Music (37)</option>
+    </select>
     <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:9px">🔥 <span data-nl="Trending nu" data-en="Trending now"></span></div>
     <div class="g4" style="margin-bottom:18px">
       <div class="ec2" onclick="go('s-checkout')"><div class="eth" style="background:#EBF0FB">🎓</div><div style="padding:9px 10px"><div style="font-size:10px;color:var(--muted)">Amara Kofi</div><div class="en2">UI Design Masterclass</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--fr);font-size:13px;font-weight:700">€24.99</span><span class="badge badgeo">🔥 Hot</span></div></div></div>
@@ -1242,6 +1243,12 @@ function mkChart(id,vals,color){
 }
 mkChart('d-chart',[32,48,41,62,74,51,84],'#5B4FE8');
 mkChart('a-chart',[14,20,18,22,31,28,36,29,40,38,42,39,45,41,48,39,42,50,46,52,49,54,51,48,56,53,58,62,59,64],'#7C6FF5');
+
+/* ── CATEGORY FILTER ── */
+function filterByCategory(val){
+  if(!val) return;
+  toast(lang==='nl'?'Categorie: '+val+' — filteren in live versie':'Category: '+val+' — filtering in live version');
+}
 
 /* ── INIT ── */
 document.getElementById('dsb-creator').style.display='flex';
