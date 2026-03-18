@@ -515,7 +515,7 @@ tr:hover td{background:var(--surf)}
         </div>
         <!-- STEP 1 -->
         <div class="spanel on" id="cp1">
-          <button class="btn bgoog" onclick="toast(lang==='nl'?'Google login beschikbaar in live versie':'Google login available in live version')">
+          <button class="btn bgoog" onclick="doGoogleSignin()">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
             <span data-nl="Doorgaan met Google" data-en="Continue with Google"></span>
           </button>
@@ -585,7 +585,7 @@ tr:hover td{background:var(--surf)}
       <div class="auth-form">
         <h1><span data-nl="Koperaccount aanmaken" data-en="Create buyer account"></span></h1>
         <p class="auth-sub"><span data-nl="Gratis — direct aan de slag" data-en="Free — start right away"></span></p>
-        <button class="btn bgoog" onclick="toast(lang==='nl'?'Google login in live versie':'Google login in live version')">
+        <button class="btn bgoog" onclick="doGoogleSignin()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
           <span data-nl="Doorgaan met Google" data-en="Continue with Google"></span>
         </button>
@@ -626,7 +626,7 @@ tr:hover td{background:var(--surf)}
       <div class="auth-form">
         <h1><span data-nl="Inloggen" data-en="Log in"></span></h1>
         <p class="auth-sub"><span data-nl="Goed om je terug te zien 👋" data-en="Good to see you back 👋"></span></p>
-        <button class="btn bgoog" onclick="toast(lang==='nl'?'Google login in live versie':'Google login in live version')">
+        <button class="btn bgoog" onclick="doGoogleSignin()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
           <span data-nl="Doorgaan met Google" data-en="Continue with Google"></span>
         </button>
@@ -659,7 +659,7 @@ tr:hover td{background:var(--surf)}
         <div class="succ-step"><div class="ss-n" style="background:var(--brand)">2</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Deel je storefront link" data-en="Share your storefront link"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="Deel velora.nl/jana op je socials" data-en="Share velora.nl/jana on your socials"></span></div></div></div>
         <div class="succ-step"><div class="ss-n" style="background:var(--brand)">3</div><div><div style="font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px"><span data-nl="Koppel je bankrekening" data-en="Connect your bank account"></span></div><div style="font-size:12px;color:var(--muted)"><span data-nl="Voeg IBAN toe voor uitbetalingen" data-en="Add IBAN for payouts"></span></div></div></div>
       </div>
-      <button class="btn bp bfull" style="font-size:14px;padding:13px" onclick="go('s-dash');dPage('dashboard')"><span data-nl="Naar mijn dashboard →" data-en="Go to my dashboard →"></span></button>
+      <button class="btn bp bfull" style="font-size:14px;padding:13px" onclick="goToDash()"><span data-nl="Naar mijn dashboard →" data-en="Go to my dashboard →"></span></button>
     </div>
   </div>
 </div>
@@ -1286,98 +1286,129 @@ document.querySelectorAll('.dsi').forEach(si=>si.addEventListener('click',closeM
 
 </script>
 
-<!-- ══ SUPABASE ══
-  Replace the two placeholder values below with your real ones from:
-  Supabase → Project Settings → API
-  Then upload to GitHub — real signups will work immediately.
+<!-- ══════════════════════════════════════════
+  SUPABASE INTEGRATION
+  1. Go to supabase.com → your project → Settings → API
+  2. Replace YOUR-PROJECT-URL with your "Project URL"
+  3. Replace YOUR-ANON-KEY with your "anon public" key
+  4. In Supabase → Authentication → URL Configuration:
+     Set Site URL to your live domain (e.g. https://velora.vercel.app)
+  5. For Google login: Authentication → Providers → Google → enable it
+     Paste your Google Client ID & Secret from console.cloud.google.com
 ══════════════════════════════════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onload="initSupabase()"></script>
 <script>
 let sb = null;
+let currentUser = null;
 
 function initSupabase(){
   sb = window.supabase.createClient(
-    'https://erdmdjqojatfnfzuwaul.supabase.co // 
-    'sb_publishable_AM-1XAROJIPyy4NnAvNcaA_MpkVmdfw'                      // 
+    https://erdmdjqojatfnfzuwaul.supabase.co, // 
+    sb_publishable_AM-1XAROJIPyy4NnAvNcaA_MpkVmdfw                           //
   );
-  checkSession(); // check if user is already logged in
+
+  // Listen for auth state changes (handles Google OAuth redirect)
+  sb.auth.onAuthStateChange((event, session) => {
+    if(session && session.user){
+      currentUser = session.user;
+      updateDashUser(session.user);
+      // If returning from Google OAuth redirect, go straight to dashboard
+      if(event === 'SIGNED_IN' && window.location.hash.includes('access_token')){
+        go('s-dash');
+        dPage('dashboard');
+      }
+    } else {
+      currentUser = null;
+    }
+  });
 }
 
-/* ── CHECK EXISTING SESSION ── */
-async function checkSession(){
-  if(!sb) return;
-  const { data } = await sb.auth.getSession();
-  if(data.session){
-    // user already logged in — update UI with their info
-    const user = data.session.user;
-    updateDashUser(user);
-  }
-}
-
-/* ── UPDATE DASHBOARD WITH REAL USER ── */
+/* ── UPDATE DASHBOARD WITH REAL USER DATA ── */
 function updateDashUser(user){
   const email = user.email || '';
-  const initials = email.substring(0,2).toUpperCase();
-  // update all avatar initials
-  document.querySelectorAll('.av-sm').forEach(el => { if(el.textContent==='AK') el.textContent=initials; });
-  // update storefront URL display elements
-  document.querySelectorAll('.sb-url, .sb-pill-url').forEach(el => {
-    if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g,'');
+  const slug  = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g,'');
+  const initials = (email.substring(0,1) + (email.substring(1,2))).toUpperCase();
+  document.querySelectorAll('.av-sm').forEach(el => { if(el.textContent==='AK') el.textContent = initials; });
+  document.querySelectorAll('.sb-url').forEach(el => { if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + slug; });
+  document.querySelectorAll('.sb-pill-url').forEach(el => { if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + slug; });
+}
+
+/* ── GO TO DASHBOARD (only if logged in) ── */
+function goToDash(){
+  if(!currentUser){
+    toast(lang==='nl'?'Log eerst in om je dashboard te openen':'Please log in to access your dashboard');
+    go('s-login');
+    return;
+  }
+  go('s-dash');
+  dPage('dashboard');
+}
+
+/* ── GOOGLE SIGN IN ── */
+async function doGoogleSignin(){
+  if(!sb){ toast('⚠️ Supabase not configured'); return; }
+  const redirectUrl = window.location.href.split('#')[0]; // current page URL
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: redirectUrl }
   });
+  if(error) toast(error.message);
+  // On success, Google redirects back here and onAuthStateChange handles it
 }
 
 /* ── CREATOR SIGNUP ── */
 async function doCreatorSignup(){
-  if(!sb){ toast('⚠️ Supabase not configured yet'); return; }
+  if(!sb){ toast('⚠️ Supabase not configured'); return; }
   const email = document.getElementById('c-email').value.trim();
   const pass  = document.getElementById('c-pass').value;
   if(!email){ toast(lang==='nl'?'Vul je e-mailadres in':'Please enter your email'); return; }
-  if(!pass || pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Password must be at least 6 characters'); return; }
+  if(pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Minimum 6 character password'); return; }
 
   const btn = document.getElementById('creator-signup-btn');
   btn.disabled = true;
-  btn.innerHTML = '⏳ ' + (lang==='nl'?'Bezig...':'Loading...');
-
-  const { data, error } = await sb.auth.signUp({ email, password: pass });
-
-  if(error){
-    toast(error.message);
-    btn.disabled = false;
-    btn.innerHTML = '<span data-nl="Volgende stap →" data-en="Next step →">' + (lang==='nl'?'Volgende stap →':'Next step →') + '</span>';
-    return;
-  }
-
-  // save profile role
-  if(data.user){
-    await sb.from('profiles').upsert({ id: data.user.id, role: 'creator' });
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = '<span data-nl="Volgende stap →" data-en="Next step →">' + (lang==='nl'?'Volgende stap →':'Next step →') + '</span>';
-  csStep(2); // move to step 2
-}
-
-/* ── BUYER SIGNUP ── */
-async function doBuyerSignup(){
-  if(!sb){ toast('⚠️ Supabase not configured yet'); return; }
-  const email = document.querySelector('#s-buyer-signup input[type="email"]').value.trim();
-  const pass  = document.querySelector('#s-buyer-signup input[type="password"]').value;
-  if(!email){ toast(lang==='nl'?'Vul je e-mailadres in':'Please enter your email'); return; }
-  if(!pass || pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Password must be at least 6 characters'); return; }
-
-  const btn = document.getElementById('buyer-signup-btn');
-  btn.disabled = true;
-  btn.innerHTML = '⏳ ' + (lang==='nl'?'Bezig...':'Loading...');
+  btn.textContent = lang==='nl'?'⏳ Bezig...':'⏳ Loading...';
 
   const { data, error } = await sb.auth.signUp({ email, password: pass });
 
   btn.disabled = false;
-  btn.innerHTML = lang==='nl'?'Gratis account aanmaken →':'Create free account →';
+  btn.textContent = lang==='nl'?'Volgende stap →':'Next step →';
 
   if(error){ toast(error.message); return; }
 
   if(data.user){
-    await sb.from('profiles').upsert({ id: data.user.id, role: 'buyer' });
+    currentUser = data.user;
+    updateDashUser(data.user);
+    await sb.from('profiles').upsert({ id: data.user.id, role: 'creator' }).then(() => {});
+  }
+
+  // Move to step 2 to collect storefront info
+  csStep(2);
+}
+
+/* ── BUYER SIGNUP ── */
+async function doBuyerSignup(){
+  if(!sb){ toast('⚠️ Supabase not configured'); return; }
+  const emailEl = document.querySelector('#s-buyer-signup input[type="email"]');
+  const passEl  = document.querySelector('#s-buyer-signup input[type="password"]');
+  const email   = emailEl ? emailEl.value.trim() : '';
+  const pass    = passEl  ? passEl.value : '';
+  if(!email){ toast(lang==='nl'?'Vul je e-mailadres in':'Please enter your email'); return; }
+  if(pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Minimum 6 character password'); return; }
+
+  const btn = document.getElementById('buyer-signup-btn');
+  btn.disabled = true;
+  btn.textContent = lang==='nl'?'⏳ Bezig...':'⏳ Loading...';
+
+  const { data, error } = await sb.auth.signUp({ email, password: pass });
+
+  btn.disabled = false;
+  btn.textContent = lang==='nl'?'Gratis account aanmaken →':'Create free account →';
+
+  if(error){ toast(error.message); return; }
+
+  if(data.user){
+    currentUser = data.user;
+    await sb.from('profiles').upsert({ id: data.user.id, role: 'buyer' }).then(() => {});
   }
 
   go('s-buyer-success');
@@ -1385,30 +1416,41 @@ async function doBuyerSignup(){
 
 /* ── LOGIN ── */
 async function doLogin(){
-  if(!sb){ toast('⚠️ Supabase not configured yet'); return; }
-  const email = document.querySelector('#s-login input[type="email"]').value.trim();
-  const pass  = document.querySelector('#s-login input[type="password"]').value;
+  if(!sb){ toast('⚠️ Supabase not configured'); return; }
+  const emailEl = document.querySelector('#s-login input[type="email"]');
+  const passEl  = document.querySelector('#s-login input[type="password"]');
+  const email   = emailEl ? emailEl.value.trim() : '';
+  const pass    = passEl  ? passEl.value : '';
   if(!email || !pass){ toast(lang==='nl'?'Vul je e-mail en wachtwoord in':'Enter your email and password'); return; }
 
   const btn = document.getElementById('login-btn');
   btn.disabled = true;
-  btn.innerHTML = '⏳ ' + (lang==='nl'?'Inloggen...':'Logging in...');
+  btn.textContent = lang==='nl'?'⏳ Inloggen...':'⏳ Logging in...';
 
   const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
 
   btn.disabled = false;
-  btn.innerHTML = lang==='nl'?'Inloggen →':'Log in →';
+  btn.textContent = lang==='nl'?'Inloggen →':'Log in →';
 
-  if(error){ toast(error.message); return; }
+  if(error){
+    // Give a clear Dutch/English error
+    const msg = error.message.includes('Invalid') || error.message.includes('credentials')
+      ? (lang==='nl'?'Onjuist e-mail of wachtwoord':'Incorrect email or password')
+      : error.message;
+    toast(msg);
+    return; // ← stops here — does NOT navigate to dashboard
+  }
 
-  if(data.user) updateDashUser(data.user);
+  currentUser = data.user;
+  updateDashUser(data.user);
   go('s-dash');
   dPage('dashboard');
 }
 
-/* ── LOGOUT (call this from sidebar logout button if you add one) ── */
+/* ── LOGOUT ── */
 async function doLogout(){
   if(sb) await sb.auth.signOut();
+  currentUser = null;
   go('s-landing');
 }
 </script>
