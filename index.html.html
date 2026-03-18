@@ -522,8 +522,8 @@ tr:hover td{background:var(--surf)}
           <div class="fdiv"><span data-nl="of met e-mail" data-en="or with email"></span></div>
           <div class="fr2"><div class="fg"><label class="fl"><span data-nl="Voornaam" data-en="First name"></span></label><input class="fi" placeholder="Jana"></div><div class="fg"><label class="fl"><span data-nl="Achternaam" data-en="Last name"></span></label><input class="fi" placeholder="Bakker"></div></div>
           <div class="fg"><label class="fl"><span data-nl="E-mailadres" data-en="Email address"></span></label><input class="fi" type="email" placeholder="jana@email.nl" id="c-email"></div>
-          <div class="fg"><label class="fl"><span data-nl="Wachtwoord" data-en="Password"></span></label><input class="fi" type="password" placeholder="••••••••" oninput="pwStr(this.value,'ca')"><div class="pw-bars"><div class="pw-bar" id="ca1"></div><div class="pw-bar" id="ca2"></div><div class="pw-bar" id="ca3"></div><div class="pw-bar" id="ca4"></div></div></div>
-          <button class="btn bp bfull" onclick="csStep(2)"><span data-nl="Volgende stap →" data-en="Next step →"></span></button>
+          <div class="fg"><label class="fl"><span data-nl="Wachtwoord" data-en="Password"></span></label><input class="fi" type="password" placeholder="••••••••" id="c-pass" oninput="pwStr(this.value,'ca')"><div class="pw-bars"><div class="pw-bar" id="ca1"></div><div class="pw-bar" id="ca2"></div><div class="pw-bar" id="ca3"></div><div class="pw-bar" id="ca4"></div></div></div>
+          <button class="btn bp bfull" id="creator-signup-btn" onclick="doCreatorSignup()"><span data-nl="Volgende stap →" data-en="Next step →"></span></button>
           <p class="terms-p"><span data-nl="Door te registreren ga je akkoord met onze" data-en="By signing up you agree to our"></span> <a href="#"><span data-nl="Voorwaarden" data-en="Terms"></span></a> &amp; <a href="#"><span data-nl="Privacy" data-en="Privacy"></span></a>.</p>
         </div>
         <!-- STEP 2 -->
@@ -594,7 +594,7 @@ tr:hover td{background:var(--surf)}
         <div class="fg"><label class="fl"><span data-nl="E-mailadres" data-en="Email"></span></label><input class="fi" type="email" placeholder="jana@email.nl"></div>
         <div class="fg"><label class="fl"><span data-nl="Wachtwoord" data-en="Password"></span></label><input class="fi" type="password" placeholder="••••••••" oninput="pwStr(this.value,'cb')"><div class="pw-bars"><div class="pw-bar" id="cb1"></div><div class="pw-bar" id="cb2"></div><div class="pw-bar" id="cb3"></div><div class="pw-bar" id="cb4"></div></div></div>
         <div class="fg"><label class="fl"><span data-nl="Land" data-en="Country"></span></label><select class="fi" style="cursor:pointer"><option>🇳🇱 Nederland</option><option>🇧🇪 België</option><option>🇩🇪 Duitsland</option><option>🇬🇧 UK</option><option>🇳🇬 Nigeria</option><option>🌍 Other</option></select></div>
-        <button class="btn bgreen bfull" onclick="go('s-buyer-success')"><span data-nl="Gratis account aanmaken →" data-en="Create free account →"></span></button>
+        <button class="btn bgreen bfull" id="buyer-signup-btn" onclick="doBuyerSignup()"><span data-nl="Gratis account aanmaken →" data-en="Create free account →"></span></button>
         <p class="terms-p"><span data-nl="Door te registreren ga je akkoord met onze" data-en="By signing up you agree to our"></span> <a href="#"><span data-nl="Voorwaarden" data-en="Terms"></span></a> &amp; <a href="#"><span data-nl="Privacy" data-en="Privacy"></span></a>.</p>
         <p class="switch-p"><span data-nl="Al een account?" data-en="Have an account?"></span> <a onclick="go('s-login')"><span data-nl="Inloggen" data-en="Log in"></span></a></p>
         <p class="switch-p"><span data-nl="Wil je ook verkopen?" data-en="Want to sell too?"></span> <a onclick="go('s-creator-signup')"><span data-nl="Creator account →" data-en="Creator account →"></span></a></p>
@@ -633,7 +633,7 @@ tr:hover td{background:var(--surf)}
         <div class="fdiv"><span data-nl="of met e-mail" data-en="or with email"></span></div>
         <div class="fg"><label class="fl"><span data-nl="E-mailadres" data-en="Email"></span></label><input class="fi" type="email" placeholder="jana@email.nl"></div>
         <div class="fg"><label class="fl" style="display:flex;justify-content:space-between"><span data-nl="Wachtwoord" data-en="Password"></span><a href="#" style="color:var(--brand);font-size:11px;font-weight:500"><span data-nl="Vergeten?" data-en="Forgot?"></span></a></label><input class="fi" type="password" placeholder="••••••••"></div>
-        <button class="btn bp bfull" onclick="go('s-dash');dPage('dashboard')"><span data-nl="Inloggen →" data-en="Log in →"></span></button>
+        <button class="btn bp bfull" id="login-btn" onclick="doLogin()"><span data-nl="Inloggen →" data-en="Log in →"></span></button>
         <p class="switch-p"><span data-nl="Nog geen account?" data-en="No account yet?"></span> <a onclick="go('s-choice')"><span data-nl="Gratis registreren" data-en="Register for free"></span></a></p>
       </div>
     </div>
@@ -1284,6 +1284,133 @@ function setMobNav(el){
 /* close sidebar when a sidebar item is clicked on mobile */
 document.querySelectorAll('.dsi').forEach(si=>si.addEventListener('click',closeMobSidebar));
 
+</script>
+
+<!-- ══ SUPABASE ══
+  Replace the two placeholder values below with your real ones from:
+  Supabase → Project Settings → API
+  Then upload to GitHub — real signups will work immediately.
+══════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onload="initSupabase()"></script>
+<script>
+let sb = null;
+
+function initSupabase(){
+  sb = window.supabase.createClient(
+    'https://YOUR-PROJECT.supabase.co', // ← replace with your Project URL
+    'YOUR-ANON-KEY'                      // ← replace with your anon/public key
+  );
+  checkSession(); // check if user is already logged in
+}
+
+/* ── CHECK EXISTING SESSION ── */
+async function checkSession(){
+  if(!sb) return;
+  const { data } = await sb.auth.getSession();
+  if(data.session){
+    // user already logged in — update UI with their info
+    const user = data.session.user;
+    updateDashUser(user);
+  }
+}
+
+/* ── UPDATE DASHBOARD WITH REAL USER ── */
+function updateDashUser(user){
+  const email = user.email || '';
+  const initials = email.substring(0,2).toUpperCase();
+  // update all avatar initials
+  document.querySelectorAll('.av-sm').forEach(el => { if(el.textContent==='AK') el.textContent=initials; });
+  // update storefront URL display elements
+  document.querySelectorAll('.sb-url, .sb-pill-url').forEach(el => {
+    if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g,'');
+  });
+}
+
+/* ── CREATOR SIGNUP ── */
+async function doCreatorSignup(){
+  if(!sb){ toast('⚠️ Supabase not configured yet'); return; }
+  const email = document.getElementById('c-email').value.trim();
+  const pass  = document.getElementById('c-pass').value;
+  if(!email){ toast(lang==='nl'?'Vul je e-mailadres in':'Please enter your email'); return; }
+  if(!pass || pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Password must be at least 6 characters'); return; }
+
+  const btn = document.getElementById('creator-signup-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ ' + (lang==='nl'?'Bezig...':'Loading...');
+
+  const { data, error } = await sb.auth.signUp({ email, password: pass });
+
+  if(error){
+    toast(error.message);
+    btn.disabled = false;
+    btn.innerHTML = '<span data-nl="Volgende stap →" data-en="Next step →">' + (lang==='nl'?'Volgende stap →':'Next step →') + '</span>';
+    return;
+  }
+
+  // save profile role
+  if(data.user){
+    await sb.from('profiles').upsert({ id: data.user.id, role: 'creator' });
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<span data-nl="Volgende stap →" data-en="Next step →">' + (lang==='nl'?'Volgende stap →':'Next step →') + '</span>';
+  csStep(2); // move to step 2
+}
+
+/* ── BUYER SIGNUP ── */
+async function doBuyerSignup(){
+  if(!sb){ toast('⚠️ Supabase not configured yet'); return; }
+  const email = document.querySelector('#s-buyer-signup input[type="email"]').value.trim();
+  const pass  = document.querySelector('#s-buyer-signup input[type="password"]').value;
+  if(!email){ toast(lang==='nl'?'Vul je e-mailadres in':'Please enter your email'); return; }
+  if(!pass || pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Password must be at least 6 characters'); return; }
+
+  const btn = document.getElementById('buyer-signup-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ ' + (lang==='nl'?'Bezig...':'Loading...');
+
+  const { data, error } = await sb.auth.signUp({ email, password: pass });
+
+  btn.disabled = false;
+  btn.innerHTML = lang==='nl'?'Gratis account aanmaken →':'Create free account →';
+
+  if(error){ toast(error.message); return; }
+
+  if(data.user){
+    await sb.from('profiles').upsert({ id: data.user.id, role: 'buyer' });
+  }
+
+  go('s-buyer-success');
+}
+
+/* ── LOGIN ── */
+async function doLogin(){
+  if(!sb){ toast('⚠️ Supabase not configured yet'); return; }
+  const email = document.querySelector('#s-login input[type="email"]').value.trim();
+  const pass  = document.querySelector('#s-login input[type="password"]').value;
+  if(!email || !pass){ toast(lang==='nl'?'Vul je e-mail en wachtwoord in':'Enter your email and password'); return; }
+
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ ' + (lang==='nl'?'Inloggen...':'Logging in...');
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+
+  btn.disabled = false;
+  btn.innerHTML = lang==='nl'?'Inloggen →':'Log in →';
+
+  if(error){ toast(error.message); return; }
+
+  if(data.user) updateDashUser(data.user);
+  go('s-dash');
+  dPage('dashboard');
+}
+
+/* ── LOGOUT (call this from sidebar logout button if you add one) ── */
+async function doLogout(){
+  if(sb) await sb.auth.signOut();
+  go('s-landing');
+}
 </script>
 </body>
 </html>
