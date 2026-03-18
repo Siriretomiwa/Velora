@@ -1286,42 +1286,44 @@ document.querySelectorAll('.dsi').forEach(si=>si.addEventListener('click',closeM
 
 </script>
 
-<!-- ══════════════════════════════════════════
-  SUPABASE INTEGRATION
-  1. Go to supabase.com → your project → Settings → API
-  2. Replace YOUR-PROJECT-URL with your "Project URL"
-  3. Replace YOUR-ANON-KEY with your "anon public" key
-  4. In Supabase → Authentication → URL Configuration:
-     Set Site URL to your live domain (e.g. https://velora.vercel.app)
-  5. For Google login: Authentication → Providers → Google → enable it
-     Paste your Google Client ID & Secret from console.cloud.google.com
-══════════════════════════════════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" onload="initSupabase()"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+
+const SUPA_URL = https://erdmdjqojatfnfzuwaul.supabase.co, // 
+const SUPA_KEY = sb_publishable_AM-1XAROJIPyy4NnAvNcaA_MpkVmdfw ;                         //
+
 let sb = null;
 let currentUser = null;
 
+/* Init runs as soon as this script tag executes —
+   no onload needed since this script is after the CDN script */
 function initSupabase(){
-  sb = window.supabase.createClient(
-    https://erdmdjqojatfnfzuwaul.supabase.co, // 
-    sb_publishable_AM-1XAROJIPyy4NnAvNcaA_MpkVmdfw                           //
-  );
+  if(sb) return; // already initialized
+  if(!window.supabase){
+    // Library not loaded yet — retry in 200ms
+    setTimeout(initSupabase, 200);
+    return;
+  }
+  sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
 
-  // Listen for auth state changes (handles Google OAuth redirect)
+  // Listen for auth state changes — handles Google OAuth redirect back to page
   sb.auth.onAuthStateChange((event, session) => {
     if(session && session.user){
       currentUser = session.user;
       updateDashUser(session.user);
-      // If returning from Google OAuth redirect, go straight to dashboard
-      if(event === 'SIGNED_IN' && window.location.hash.includes('access_token')){
-        go('s-dash');
-        dPage('dashboard');
+      if(event === 'SIGNED_IN'){
+        const active = document.querySelector('.screen.on');
+        if(active && active.id !== 's-dash'){
+          go('s-dash');
+          dPage('dashboard');
+        }
       }
     } else {
       currentUser = null;
     }
   });
 }
+initSupabase();
 
 /* ── UPDATE DASHBOARD WITH REAL USER DATA ── */
 function updateDashUser(user){
@@ -1346,70 +1348,96 @@ function goToDash(){
 
 /* ── GOOGLE SIGN IN ── */
 async function doGoogleSignin(){
-  if(!sb){ toast('⚠️ Supabase not configured'); return; }
-  const redirectUrl = window.location.href.split('#')[0]; // current page URL
-  const { error } = await sb.auth.signInWithOAuth({
+  if(!sb){
+    toast('⏳ Nog aan het laden — probeer opnieuw / still loading, try again');
+    initSupabase();
+    return;
+  }
+  const redirectTo = window.location.origin + window.location.pathname;
+  document.querySelectorAll('.bgoog').forEach(b=>{ b.disabled=true; b.style.opacity='.6'; });
+  const { data, error } = await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: redirectUrl }
+    options: { redirectTo }
   });
-  if(error) toast(error.message);
-  // On success, Google redirects back here and onAuthStateChange handles it
+  if(error){
+    toast('Google: ' + error.message);
+    document.querySelectorAll('.bgoog').forEach(b=>{ b.disabled=false; b.style.opacity='1'; });
+    return;
+  }
+  if(data && data.url) window.location.href = data.url;
 }
 
 /* ── CREATOR SIGNUP ── */
 async function doCreatorSignup(){
-  if(!sb){ toast('⚠️ Supabase not configured'); return; }
-  const email = document.getElementById('c-email').value.trim();
-  const pass  = document.getElementById('c-pass').value;
+  if(!sb){
+    toast('⚠️ Supabase niet geladen. Herlaad de pagina. / Supabase not loaded. Reload the page.');
+    initSupabase();
+    return;
+  }
+  const email = (document.getElementById('c-email').value||'').trim();
+  const pass  = (document.getElementById('c-pass').value||'');
   if(!email){ toast(lang==='nl'?'Vul je e-mailadres in':'Please enter your email'); return; }
-  if(pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Minimum 6 character password'); return; }
+  if(pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Password needs 6+ characters'); return; }
 
   const btn = document.getElementById('creator-signup-btn');
   btn.disabled = true;
-  btn.textContent = lang==='nl'?'⏳ Bezig...':'⏳ Loading...';
+  btn.textContent = '⏳ ' + (lang==='nl'?'Bezig...':'Loading...');
 
   const { data, error } = await sb.auth.signUp({ email, password: pass });
 
   btn.disabled = false;
   btn.textContent = lang==='nl'?'Volgende stap →':'Next step →';
 
-  if(error){ toast(error.message); return; }
-
-  if(data.user){
-    currentUser = data.user;
-    updateDashUser(data.user);
-    await sb.from('profiles').upsert({ id: data.user.id, role: 'creator' }).then(() => {});
+  if(error){
+    // Show the exact Supabase error so you can debug it
+    toast('❌ ' + error.message);
+    return;
   }
 
-  // Move to step 2 to collect storefront info
+  // Supabase may return a user even before email confirmation
+  if(data && data.user){
+    currentUser = data.user;
+    updateDashUser(data.user);
+  }
+
+  // Check if email confirmation is required
+  if(data && !data.session){
+    // Email confirmation required — tell the user
+    toast(lang==='nl'?'✉️ Check je e-mail om te bevestigen!':'✉️ Check your email to confirm!');
+    csStep(2); // still move forward in the UI
+    return;
+  }
+
   csStep(2);
 }
 
 /* ── BUYER SIGNUP ── */
 async function doBuyerSignup(){
-  if(!sb){ toast('⚠️ Supabase not configured'); return; }
+  if(!sb){
+    toast('⚠️ Supabase niet geladen. Herlaad de pagina. / not loaded, reload.');
+    initSupabase();
+    return;
+  }
   const emailEl = document.querySelector('#s-buyer-signup input[type="email"]');
   const passEl  = document.querySelector('#s-buyer-signup input[type="password"]');
   const email   = emailEl ? emailEl.value.trim() : '';
   const pass    = passEl  ? passEl.value : '';
   if(!email){ toast(lang==='nl'?'Vul je e-mailadres in':'Please enter your email'); return; }
-  if(pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Minimum 6 character password'); return; }
+  if(pass.length < 6){ toast(lang==='nl'?'Wachtwoord minimaal 6 tekens':'Password needs 6+ characters'); return; }
 
   const btn = document.getElementById('buyer-signup-btn');
   btn.disabled = true;
-  btn.textContent = lang==='nl'?'⏳ Bezig...':'⏳ Loading...';
+  btn.textContent = '⏳ ' + (lang==='nl'?'Bezig...':'Loading...');
 
   const { data, error } = await sb.auth.signUp({ email, password: pass });
 
   btn.disabled = false;
   btn.textContent = lang==='nl'?'Gratis account aanmaken →':'Create free account →';
 
-  if(error){ toast(error.message); return; }
+  if(error){ toast('❌ ' + error.message); return; }
 
-  if(data.user){
-    currentUser = data.user;
-    await sb.from('profiles').upsert({ id: data.user.id, role: 'buyer' }).then(() => {});
-  }
+  if(data && data.user) currentUser = data.user;
+  if(data && !data.session) toast(lang==='nl'?'✉️ Check je e-mail om te bevestigen!':'✉️ Check your email to confirm!');
 
   go('s-buyer-success');
 }
