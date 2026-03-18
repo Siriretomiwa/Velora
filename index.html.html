@@ -15,6 +15,9 @@
   --fr:'Fraunces',serif;--js:'Plus Jakarta Sans',sans-serif;
 }
 html,body{height:100%;font-family:var(--js);font-size:14px;color:var(--ink);background:var(--white);overflow:hidden}
+/* ── MOBILE TOUCH ── */
+*{-webkit-tap-highlight-color:transparent}
+input,select,textarea{font-size:16px!important} /* prevent iOS zoom */
 
 /* ── SCREEN SYSTEM ── */
 .screen{position:absolute;inset:0;display:none;overflow-y:auto;overflow-x:hidden}
@@ -240,10 +243,112 @@ tr:hover td{background:var(--surf)}
 
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* ══════════════════════════════════
+   MOBILE RESPONSIVE  (≤ 680px)
+   Layout only — design unchanged
+══════════════════════════════════ */
+
+/* MOBILE BOTTOM NAV */
+.mob-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--border);z-index:300;padding:6px 0 calc(6px + env(safe-area-inset-bottom))}
+.mob-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 0;font-size:10px;font-weight:600;color:var(--muted)}
+.mob-nav-item.on{color:var(--brand)}
+.mob-nav-icon{font-size:20px;line-height:1.2}
+/* MOBILE SIDEBAR OVERLAY */
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:390}
+.mob-overlay.on{display:block}
+/* HAM BUTTON — hidden on desktop */
+.ham-btn{display:none;background:transparent;border:1px solid var(--border);border-radius:6px;padding:5px 9px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0}
+
+
+/* hide mobile nav on non-dashboard screens */
+.screen:not(#s-dash) ~ .mob-bottom-nav{display:none!important}
+@media(max-width:680px){
+
+  /* prevent iOS font zoom on input focus */
+  input,select,textarea{font-size:16px!important}
+
+  /* ── HAM BUTTON ── */
+  .ham-btn{display:flex;align-items:center;justify-content:center}
+
+  /* ── NAV — hide text links, keep logo + lang + CTA ── */
+  .topnav{padding:0 12px;gap:6px}
+  .nav-link{display:none}
+
+  /* ── HERO ── */
+  .hero-bg.hero-dots{padding:36px 18px 44px!important;text-align:center}
+
+  /* ── STATS BAR — 2 cols ── */
+  div.stats-bar,div[style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}
+
+  /* ── CHOICE CARDS — stack vertically ── */
+  .chc-grid{grid-template-columns:1fr!important}
+  div[style*="grid-template-columns:1fr 1fr"].chc-grid{grid-template-columns:1fr!important}
+
+  /* ── AUTH LAYOUT ── */
+  .auth-wrap{grid-template-columns:1fr!important;height:auto;min-height:100vh}
+  .auth-l{padding:22px 18px 18px!important}
+  .auth-l h2{font-size:21px!important}
+  .auth-l>p{font-size:0;display:none} /* save space */
+  .auth-feats{display:none} /* hide feature list on mobile, not enough room */
+  .auth-r{padding:20px 18px 44px!important}
+  .auth-form{max-width:100%!important}
+
+  /* ── FIRST/LAST NAME — stack ── */
+  .fr2{grid-template-columns:1fr!important}
+
+  /* ── DASHBOARD SHELL — full width, no sidebar ── */
+  .dash-app{grid-template-columns:1fr!important;height:100vh}
+  .dash-inner{flex-direction:column}
+
+  /* sidebar: hidden by default, slides in when .mob-open */
+  .dash-side{display:none!important;position:fixed;top:54px;left:0;bottom:60px;width:220px;z-index:400;box-shadow:4px 0 20px rgba(0,0,0,.12);flex-direction:column}
+  .dash-side.mob-open{display:flex!important}
+
+  /* main area: full width, extra bottom padding for nav bar */
+  #dash-main-area{padding:14px 14px 80px!important;width:100%;flex:1;overflow-y:auto}
+
+  /* ── DASHBOARD TOP TABS — scroll horizontally ── */
+  .dash-top{padding:0 10px!important;gap:3px;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+  .dash-top .nav-link{font-size:11px!important;padding:4px 8px!important;flex-shrink:0}
+
+  /* ── STAT GRIDS — 2 cols ── */
+  .sg2{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+
+  /* ── CARD GRIDS — stack ── */
+  .g2{grid-template-columns:1fr!important}
+  .g3{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+
+  /* ── TABLES — horizontal scroll ── */
+  .tblw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tblw table{min-width:500px}
+
+  /* ── CHECKOUT — stack, hide right order panel ── */
+  .co-wrap{grid-template-columns:1fr!important}
+  .os{display:none!important}
+
+  /* ── SHARE BAR — wrap ── */
+  .share-bar{flex-wrap:wrap}
+  .share-bar>div:nth-child(2){flex:1;min-width:0}
+
+  /* ── BOTTOM NAV — show on mobile ── */
+  .mob-bottom-nav{display:flex}
+
+  /* ── TOAST — above bottom nav ── */
+  .toast{bottom:72px!important}
+
+  /* ── SUCCESS CARD ── */
+  .succ-card{padding:0 2px}
+
+  /* ── CHOICE SECTION — stack cards ── */
+  .choice-stack-grid{grid-template-columns:1fr!important}
+}
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
+<div class="mob-overlay" id="mob-overlay" onclick="closeMobSidebar()"></div>
 
 <!-- ═══════════════════════════════════════════
   S1 — LANDING
@@ -669,6 +774,7 @@ tr:hover td{background:var(--surf)}
 <div class="dash-app">
   <!-- TOP BAR -->
   <div class="dash-top">
+    <button class="ham-btn" onclick="openMobSidebar()">☰</button>
     <a class="logo" onclick="go('s-landing')"><div class="lmark">V</div><div class="lname">vel<span>ora</span></div></a>
     <div style="display:flex;gap:3px;margin-left:10px">
       <div class="nav-link on" id="dt-creator" onclick="setDashSection('creator')"><span data-nl="👤 Creator" data-en="👤 Creator"></span></div>
@@ -995,6 +1101,15 @@ tr:hover td{background:var(--surf)}
 
   </div><!-- /dash-main -->
 </div><!-- /dash-app -->
+
+<!-- MOBILE BOTTOM NAV (dashboard) -->
+<div class="mob-bottom-nav" id="mob-dash-nav">
+  <div class="mob-nav-item on" onclick="dPage('dashboard');setMobNav(this)"><div class="mob-nav-icon">📊</div>Dashboard</div>
+  <div class="mob-nav-item" onclick="dPage('products');setMobNav(this)"><div class="mob-nav-icon">📦</div><span data-nl="Producten" data-en="Products"></span></div>
+  <div class="mob-nav-item" onclick="dPage('addprod');setMobNav(this)"><div class="mob-nav-icon">➕</div><span data-nl="Nieuw" data-en="New"></span></div>
+  <div class="mob-nav-item" onclick="dPage('payouts');setMobNav(this)"><div class="mob-nav-icon">💸</div><span data-nl="Uitbetaling" data-en="Payouts"></span></div>
+  <div class="mob-nav-item" onclick="dPage('notifs');setMobNav(this)"><div class="mob-nav-icon">🔔</div><span data-nl="Notifs" data-en="Alerts"></span></div>
+</div>
 </div><!-- /s-dash -->
 
 <script>
@@ -1131,6 +1246,27 @@ mkChart('a-chart',[14,20,18,22,31,28,36,29,40,38,42,39,45,41,48,39,42,50,46,52,4
 /* ── INIT ── */
 document.getElementById('dsb-creator').style.display='flex';
 ['explore','checkout','buyer'].forEach(x=>{const e=document.getElementById('dsb-'+x);if(e)e.style.display='none';});
+setLang('nl'); /* render all text immediately on page load */
+
+/* ── MOBILE SIDEBAR ── */
+function openMobSidebar(){
+  const sb=document.getElementById('dsb-creator');
+  if(sb)sb.classList.add('mob-open');
+  const ov=document.getElementById('mob-overlay');
+  if(ov)ov.classList.add('on');
+}
+function closeMobSidebar(){
+  document.querySelectorAll('.dash-side').forEach(s=>s.classList.remove('mob-open'));
+  const ov=document.getElementById('mob-overlay');
+  if(ov)ov.classList.remove('on');
+}
+function setMobNav(el){
+  document.querySelectorAll('#mob-dash-nav .mob-nav-item').forEach(i=>i.classList.remove('on'));
+  el.classList.add('on');
+}
+/* close sidebar when a sidebar item is clicked on mobile */
+document.querySelectorAll('.dsi').forEach(si=>si.addEventListener('click',closeMobSidebar));
+
 </script>
 </body>
 </html>
