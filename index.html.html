@@ -1356,9 +1356,19 @@ async function publishProduct(){
   document.getElementById('upload-bar').style.width = '100%';
   document.getElementById('upload-pct').textContent = '100%';
 
+  // Always fetch fresh session so RLS gets the correct uid
+  const { data: { session } } = await sb.auth.getSession();
+  const uid = session ? session.user.id : (currentUser ? currentUser.id : null);
+  if(!uid){
+    toast(lang==='nl'?'Sessie verlopen — log opnieuw in':'Session expired — please log in again');
+    btn.disabled = false;
+    btn.textContent = lang==='nl'?'🚀 Publiceer product':'🚀 Publish product';
+    go('s-login'); return;
+  }
+
   // Save product metadata to Supabase database
   const { error: dbError } = await sb.from('products').insert({
-    creator_id:  currentUser.id,
+    creator_id:  uid,
     name,
     description: desc,
     price,
@@ -1401,7 +1411,6 @@ async function publishProduct(){
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  
 const SUPA_URL = 'https://erdmdjqojatfnfzuwaul.supabase.co';
 const SUPA_KEY = 'sb_publishable_AM-1XAROJIPyy4NnAvNcaA_MpkVmdfw'; 
 
