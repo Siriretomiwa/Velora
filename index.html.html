@@ -950,12 +950,23 @@ tr:hover td{background:var(--surf)}
         <div class="cc" onclick="selectType(this)"><div style="font-size:20px;margin-bottom:4px">📦</div><div style="font-size:12px;font-weight:600;color:inherit"><span data-nl="Bundel" data-en="Bundle"></span></div><div style="font-size:10px;color:var(--muted)"><span data-nl="Meerdere samen" data-en="Multiple together"></span></div></div>
       </div>
       <div class="g2">
-        <div class="card"><div class="ct"><span data-nl="Product details" data-en="Product details"></span></div><label class="fl"><span data-nl="Productnaam" data-en="Product name"></span></label><input class="fi" data-nl-placeholder="bijv. Social Media Gids 2025" data-en-placeholder="e.g. Social Media Guide 2025" placeholder="bijv. Social Media Gids 2025"><label class="fl"><span data-nl="Beschrijving" data-en="Description"></span></label><textarea class="fi" rows="3" style="resize:none" data-nl-placeholder="Beschrijf wat de koper krijgt..." data-en-placeholder="Describe what the buyer gets..." placeholder="Beschrijf wat de koper krijgt..."></textarea><label class="fl"><span data-nl="Upload bestand" data-en="Upload file"></span></label><div style="border:2px dashed var(--border);border-radius:8px;padding:18px;text-align:center;cursor:pointer;background:var(--surf);margin-bottom:9px" onclick="toast(lang==='nl'?'Bestandsupload in live versie':'File upload in live version')"><div style="font-size:22px;margin-bottom:4px">📁</div><div style="font-size:11.5px;color:var(--muted)"><span data-nl="Sleep bestand hierheen of klik" data-en="Drag file here or click"></span></div></div><label class="fl"><span data-nl="Categorie" data-en="Category"></span></label><select class="fi"><option>📈 Marketing</option><option>🎨 Design</option><option>💰 Finance</option><option>💻 Tech</option></select></div>
-        <div class="card"><div class="ct"><span data-nl="Prijs & instellingen" data-en="Pricing & settings"></span></div><label class="fl"><span data-nl="Prijstype" data-en="Pricing type"></span></label><select class="fi"><option data-nl="Eenmalig" data-en="One-time">Eenmalig</option><option data-nl="Recurring (per maand)" data-en="Recurring (monthly)">Recurring</option><option data-nl="Betaal wat je wil" data-en="Pay what you want">Betaal wat je wil</option></select><label class="fl"><span data-nl="Prijs (EUR)" data-en="Price (EUR)"></span></label><input class="fi" type="number" value="9.99" step="0.01"><div style="font-size:10.5px;color:var(--muted);margin-bottom:10px"><span data-nl="BTW wordt automatisch berekend" data-en="VAT is calculated automatically"></span></div><label class="fl"><span data-nl="Zichtbaarheid" data-en="Visibility"></span></label><select class="fi"><option data-nl="Publiek" data-en="Public">Publiek</option><option data-nl="Privé" data-en="Private">Privé</option><option data-nl="Wachtwoordbeveiligd" data-en="Password protected">Wachtwoordbeveiligd</option></select>
+        <div class="card"><div class="ct"><span data-nl="Product details" data-en="Product details"></span></div><label class="fl"><span data-nl="Productnaam" data-en="Product name"></span></label><input class="fi" id="prod-name" data-nl-placeholder="bijv. Social Media Gids 2025" data-en-placeholder="e.g. Social Media Guide 2025" placeholder="bijv. Social Media Gids 2025"><label class="fl"><span data-nl="Beschrijving" data-en="Description"></span></label><textarea class="fi" id="prod-desc" rows="3" style="resize:none" data-nl-placeholder="Beschrijf wat de koper krijgt..." data-en-placeholder="Describe what the buyer gets..." placeholder="Beschrijf wat de koper krijgt..."></textarea><label class="fl"><span data-nl="Upload bestand" data-en="Upload file"></span></label>
+<input type="file" id="prod-file" style="display:none" onchange="onFileChosen(this)">
+<div id="upload-zone" style="border:2px dashed var(--border);border-radius:8px;padding:18px;text-align:center;cursor:pointer;background:var(--surf);margin-bottom:9px;transition:.15s" onclick="document.getElementById('prod-file').click()" ondragover="event.preventDefault();this.style.borderColor='var(--brand)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="onFileDrop(event)">
+  <div id="upload-icon" style="font-size:22px;margin-bottom:4px">📁</div>
+  <div id="upload-label" style="font-size:11.5px;color:var(--muted)"><span data-nl="Sleep bestand hierheen of klik" data-en="Drag file here or click"></span></div>
+  <div id="upload-progress" style="display:none;margin-top:10px">
+    <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden">
+      <div id="upload-bar" style="height:100%;background:var(--brand);border-radius:2px;width:0%;transition:width .3s"></div>
+    </div>
+    <div id="upload-pct" style="font-size:11px;color:var(--brand);margin-top:4px">0%</div>
+  </div>
+</div><label class="fl"><span data-nl="Categorie" data-en="Category"></span></label><select class="fi"><option>📈 Marketing</option><option>🎨 Design</option><option>💰 Finance</option><option>💻 Tech</option></select></div>
+        <div class="card"><div class="ct"><span data-nl="Prijs & instellingen" data-en="Pricing & settings"></span></div><label class="fl"><span data-nl="Prijstype" data-en="Pricing type"></span></label><select class="fi"><option data-nl="Eenmalig" data-en="One-time">Eenmalig</option><option data-nl="Recurring (per maand)" data-en="Recurring (monthly)">Recurring</option><option data-nl="Betaal wat je wil" data-en="Pay what you want">Betaal wat je wil</option></select><label class="fl"><span data-nl="Prijs (EUR)" data-en="Price (EUR)"></span></label><input class="fi" id="prod-price" type="number" value="9.99" step="0.01"><div style="font-size:10.5px;color:var(--muted);margin-bottom:10px"><span data-nl="BTW wordt automatisch berekend" data-en="VAT is calculated automatically"></span></div><label class="fl"><span data-nl="Zichtbaarheid" data-en="Visibility"></span></label><select class="fi"><option data-nl="Publiek" data-en="Public">Publiek</option><option data-nl="Privé" data-en="Private">Privé</option><option data-nl="Wachtwoordbeveiligd" data-en="Password protected">Wachtwoordbeveiligd</option></select>
           <div class="trow"><div><div class="ti"><span data-nl="Affiliate commissie" data-en="Affiliate commission"></span></div><div class="ts2"><span data-nl="Laat anderen promoten" data-en="Let others promote"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
           <div class="trow"><div><div class="ti"><span data-nl="Auto BTW-factuur" data-en="Auto VAT invoice"></span></div><div class="ts2"><span data-nl="Naar elke koper" data-en="To every buyer"></span></div></div><div class="tgl on" onclick="this.classList.toggle('on')"></div></div>
           <div class="trow"><div><div class="ti"><span data-nl="Upsell tonen" data-en="Show upsell"></span></div><div class="ts2"><span data-nl="Na aankoop" data-en="After purchase"></span></div></div><div class="tgl" onclick="this.classList.toggle('on')"></div></div>
-          <button class="btn bp" style="width:100%;padding:10px;margin-top:11px">🚀 <span data-nl="Publiceer product" data-en="Publish product"></span></button>
+          <button class="btn bp" id="publish-btn" style="width:100%;padding:10px;margin-top:11px" onclick="publishProduct()">🚀 <span data-nl="Publiceer product" data-en="Publish product"></span></button>
         </div>
       </div>
     </div>
@@ -1284,11 +1295,113 @@ function setMobNav(el){
 /* close sidebar when a sidebar item is clicked on mobile */
 document.querySelectorAll('.dsi').forEach(si=>si.addEventListener('click',closeMobSidebar));
 
+/* ── FILE UPLOAD HELPERS ── */
+let chosenFile = null;
+
+function onFileChosen(input){
+  if(input.files && input.files[0]) setChosenFile(input.files[0]);
+}
+function onFileDrop(e){
+  e.preventDefault();
+  document.getElementById('upload-zone').style.borderColor='var(--border)';
+  if(e.dataTransfer.files && e.dataTransfer.files[0]) setChosenFile(e.dataTransfer.files[0]);
+}
+function setChosenFile(file){
+  chosenFile = file;
+  const mb = (file.size/1024/1024).toFixed(1);
+  document.getElementById('upload-icon').textContent = '✅';
+  document.getElementById('upload-label').textContent = file.name + ' (' + mb + ' MB)';
+  document.getElementById('upload-zone').style.borderColor = 'var(--green)';
+}
+
+/* ── PUBLISH PRODUCT ── */
+async function publishProduct(){
+  if(!sb){ toast('⚠️ Supabase niet geladen'); return; }
+  if(!currentUser){ toast(lang==='nl'?'Log eerst in':'Please log in first'); go('s-login'); return; }
+
+  const name  = (document.getElementById('prod-name').value||'').trim();
+  const desc  = (document.getElementById('prod-desc').value||'').trim();
+  const price = parseFloat(document.getElementById('prod-price').value||'0');
+
+  if(!name){ toast(lang==='nl'?'Geef je product een naam':'Enter a product name'); return; }
+  if(!chosenFile){ toast(lang==='nl'?'Upload eerst een bestand':'Please upload a file first'); return; }
+  if(!price || price <= 0){ toast(lang==='nl'?'Voer een geldige prijs in':'Enter a valid price'); return; }
+
+  const btn = document.getElementById('publish-btn');
+  btn.disabled = true;
+  btn.textContent = lang==='nl'?'⏳ Uploaden...':'⏳ Uploading...';
+
+  // Build a unique file path: userId/timestamp-filename
+  const ext      = chosenFile.name.split('.').pop();
+  const safeName = chosenFile.name.replace(/[^a-z0-9.\-_]/gi,'_');
+  const filePath = currentUser.id + '/' + Date.now() + '-' + safeName;
+
+  // Show progress bar
+  document.getElementById('upload-progress').style.display = 'block';
+
+  // Upload to Supabase Storage
+  const { data: storageData, error: storageError } = await sb.storage
+    .from('products')
+    .upload(filePath, chosenFile, { upsert: false });
+
+  if(storageError){
+    toast('❌ Upload mislukt: ' + storageError.message);
+    btn.disabled = false;
+    btn.textContent = lang==='nl'?'🚀 Publiceer product':'🚀 Publish product';
+    document.getElementById('upload-progress').style.display = 'none';
+    return;
+  }
+
+  // Animate progress bar to 100%
+  document.getElementById('upload-bar').style.width = '100%';
+  document.getElementById('upload-pct').textContent = '100%';
+
+  // Save product metadata to Supabase database
+  const { error: dbError } = await sb.from('products').insert({
+    creator_id:  currentUser.id,
+    name,
+    description: desc,
+    price,
+    file_path:   filePath,
+    status:      'live'
+  });
+
+  btn.disabled = false;
+  btn.textContent = lang==='nl'?'🚀 Publiceer product':'🚀 Publish product';
+  document.getElementById('upload-progress').style.display = 'none';
+
+  if(dbError){
+    // If products table doesn't exist yet, still show success for the upload
+    if(dbError.code === '42P01'){
+      toast(lang==='nl'?'✅ Bestand geüpload! Maak de products tabel aan in Supabase.':'✅ File uploaded! Create the products table in Supabase.');
+    } else {
+      toast('❌ Database fout: ' + dbError.message);
+    }
+    return;
+  }
+
+  // Success!
+  toast(lang==='nl'?'🎉 Product gepubliceerd!':'🎉 Product published!');
+
+  // Reset form
+  chosenFile = null;
+  document.getElementById('prod-file').value = '';
+  document.getElementById('prod-name').value = '';
+  document.getElementById('prod-desc').value = '';
+  document.getElementById('prod-price').value = '9.99';
+  document.getElementById('upload-icon').textContent = '📁';
+  document.getElementById('upload-label').innerHTML = '<span>' + (lang==='nl'?'Sleep bestand hierheen of klik':'Drag file here or click') + '</span>';
+  document.getElementById('upload-zone').style.borderColor = 'var(--border)';
+
+  // Go to products page
+  setTimeout(()=>{ dPage('products'); }, 1200);
+}
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-
+  
 const SUPA_URL = 'https://erdmdjqojatfnfzuwaul.supabase.co';
 const SUPA_KEY = 'sb_publishable_AM-1XAROJIPyy4NnAvNcaA_MpkVmdfw'; 
 
