@@ -1327,12 +1327,43 @@ initSupabase();
 
 /* ── UPDATE DASHBOARD WITH REAL USER DATA ── */
 function updateDashUser(user){
-  const email = user.email || '';
-  const slug  = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g,'');
+  const email    = user.email || '';
+  const slug     = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g,'');
   const initials = (email.substring(0,1) + (email.substring(1,2))).toUpperCase();
-  document.querySelectorAll('.av-sm').forEach(el => { if(el.textContent==='AK') el.textContent = initials; });
-  document.querySelectorAll('.sb-url').forEach(el => { if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + slug; });
-  document.querySelectorAll('.sb-pill-url').forEach(el => { if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + slug; });
+  const dispName = (user.user_metadata && user.user_metadata.full_name)
+                   ? user.user_metadata.full_name
+                   : email.split('@')[0];
+
+  // Avatars
+  document.querySelectorAll('.av-sm').forEach(el => {
+    if(el.textContent.trim()==='AK') el.textContent = initials;
+  });
+
+  // Storefront URLs
+  document.querySelectorAll('.sb-url').forEach(el => {
+    if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + slug;
+  });
+  document.querySelectorAll('.sb-pill-url').forEach(el => {
+    if(el.textContent.includes('amara')) el.textContent = 'velora.nl/' + slug;
+  });
+
+  // Top bar storefront pill
+  document.querySelectorAll('.dash-top span').forEach(el => {
+    if(el.textContent.includes('velora.nl/amara')) el.textContent = 'velora.nl/' + slug;
+  });
+
+  // Sidebar display name and URL under avatar card
+  document.querySelectorAll('.dash-side *').forEach(el => {
+    if(el.children.length === 0 && el.textContent.trim() === 'Amara Kofi') el.textContent = dispName;
+    if(el.children.length === 0 && el.textContent.trim() === 'velora.nl/amara') el.textContent = 'velora.nl/' + slug;
+  });
+
+  // Welcome message "Welkom terug, Amara" / "Welcome back, Amara"
+  document.querySelectorAll('.dash-ps').forEach(el => {
+    el.innerHTML = el.innerHTML
+      .replace('Welkom terug, Amara', 'Welkom terug, ' + dispName)
+      .replace('Welcome back, Amara', 'Welcome back, ' + dispName);
+  });
 }
 
 /* ── GO TO DASHBOARD (only if logged in) ── */
